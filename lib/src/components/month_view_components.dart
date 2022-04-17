@@ -225,6 +225,8 @@ class WeekDayTile extends StatelessWidget {
   /// Style for week day string.
   final TextStyle? textStyle;
 
+  final String? title;
+
   /// Title for week day in month view.
   const WeekDayTile({
     Key? key,
@@ -232,6 +234,7 @@ class WeekDayTile extends StatelessWidget {
     this.backgroundColor = Constants.white,
     this.displayBorder = true,
     this.textStyle,
+    this.title,
   }) : super(key: key);
 
   @override
@@ -248,7 +251,7 @@ class WeekDayTile extends StatelessWidget {
         ),
       ),
       child: Text(
-        Constants.weekTitles[dayIndex],
+        title != null ? title! : Constants.weekTitles[dayIndex],
         style: textStyle ??
             TextStyle(
               fontSize: 17,
