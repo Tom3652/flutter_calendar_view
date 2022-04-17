@@ -57,11 +57,17 @@ class CalendarEventData<T> {
   factory CalendarEventData.fromJson(Map<String, dynamic> json) {
     return CalendarEventData(
       title: json["title"],
-      date: json["date"],
+      date: DateTime.fromMillisecondsSinceEpoch(json["date"]),
       uid: json["uid"],
-      startTime: json["startTime"],
-      endDate: json["endDate"],
-      endTime: json["endTime"],
+      startTime: json["startTime"] != null
+          ? DateTime.fromMillisecondsSinceEpoch(json["startTime"])
+          : null,
+      endDate: json["endDate"] != null
+          ? DateTime.fromMillisecondsSinceEpoch(json["endDate"])
+          : null,
+      endTime: json["endTime"] != null
+          ? DateTime.fromMillisecondsSinceEpoch(json["endTime"])
+          : null,
       event: json["event"],
       color: Color(json["color"]),
       description: json["description"],
@@ -69,15 +75,15 @@ class CalendarEventData<T> {
   }
 
   Map<String, dynamic> toJson() => {
-        "date": date,
-        "startTime": startTime,
-        "endTime": endTime,
+        "date": date.millisecondsSinceEpoch,
+        "startTime": startTime?.millisecondsSinceEpoch,
+        "endTime": endTime?.millisecondsSinceEpoch,
         "event": event,
         "title": title,
         "uid": uid,
         "color": color.value,
         "description": description,
-        "endDate": endDate,
+        "endDate": endDate.millisecondsSinceEpoch,
       };
 
   @override
