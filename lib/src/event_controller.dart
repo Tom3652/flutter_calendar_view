@@ -173,9 +173,7 @@ class EventController<T> extends ChangeNotifier {
     }
 
     print("events :$events");
-
-    events.removeWhere((element) =>
-        element.date.isAfter(date) || element.endDate.isBefore(date));
+    //events.removeWhere((element) => element.date.isAfter(date) || element.endDate.isBefore(date));
 
     print("events after :$events");
 

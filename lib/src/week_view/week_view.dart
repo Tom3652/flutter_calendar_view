@@ -437,7 +437,7 @@ class WeekViewState<T> extends State<WeekView<T>> {
       DateTime startDuration,
       DateTime endDuration) {
     if (events.isNotEmpty)
-      return events[0].allDay ? SizedBox() : RoundedEventTile(
+      return RoundedEventTile(
         borderRadius: BorderRadius.circular(6.0),
         title: events[0].title,
         titleStyle: TextStyle(
