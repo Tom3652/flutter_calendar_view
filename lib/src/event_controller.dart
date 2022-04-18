@@ -141,7 +141,8 @@ class EventController<T> extends ChangeNotifier {
       }
     }
 
-    print("ranging events : $_rangingEventList");
+    //print("ranging events : $_rangingEventList");
+    print("today date : $date");
 
     final daysFromRange = <DateTime>[];
     for (final rangingEvent in _rangingEventList) {
@@ -158,6 +159,10 @@ class EventController<T> extends ChangeNotifier {
       if (rangingEvent.date.isBefore(rangingEvent.endDate)) {
         for (final eventDay in daysFromRange) {
           print("event day : $eventDay");
+          if(rangingEvent.title == "Test") {
+            print("event day : ${eventDay.day}");
+            print("date day : ${date.day}");
+          }
           if (eventDay.year == date.year &&
               eventDay.month == date.month &&
               eventDay.day == date.day) {
