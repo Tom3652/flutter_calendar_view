@@ -99,6 +99,9 @@ class InternalDayViewPage<T> extends StatelessWidget {
         .where((element) => element.allDay)
         .toList();
     final isEventAllDay = eventsAllDay.isNotEmpty;
+    print("is Event all day for DayView : $isEventAllDay");
+    print("all days event : ${eventsAllDay}");
+    print("----------------------------------");
     return Container(
       height: height,
       width: width,

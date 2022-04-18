@@ -165,6 +165,10 @@ class InternalWeekViewPage<T> extends StatelessWidget {
                         Container(
                           child: Text(
                             controller.getLocalizedDayForEvent(),
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
                           width: timeLineWidth,
                         ),
@@ -173,28 +177,30 @@ class InternalWeekViewPage<T> extends StatelessWidget {
                           child: Row(
                             children: List.generate(7, (index) {
                               final List<CalendarEventData> events = controller.getEventsOnDay(filteredDates[index]).where((element) => element.allDay).toList();
-                              return Container(
-                                width: weekTitleWidth,
-                                child: Column(
-                                  children: List.generate(events.length, (index) {
-                                    return Container(
-                                      width: weekTitleWidth-2,
-                                      padding: EdgeInsets.all(5),
-                                      margin: EdgeInsets.only(bottom: 10),
-                                      decoration: BoxDecoration(
-                                          color: events[index].color,
-                                          borderRadius: BorderRadius.circular(4)
-                                      ),
-                                      child: Center(
-                                          child: Text(
-                                            events[index].title,
-                                            style: TextStyle(
-                                                fontSize: 12
-                                            ),
-                                          )
-                                      ),
-                                    );
-                                  }),
+                              return Center(
+                                child: Container(
+                                  width: weekTitleWidth,
+                                  child: Column(
+                                    children: List.generate(events.length, (index) {
+                                      return Container(
+                                        width: weekTitleWidth-4,
+                                        padding: EdgeInsets.all(5),
+                                        margin: EdgeInsets.only(bottom: 10),
+                                        decoration: BoxDecoration(
+                                            color: events[index].color,
+                                            borderRadius: BorderRadius.circular(4)
+                                        ),
+                                        child: Center(
+                                            child: Text(
+                                              events[index].title,
+                                              style: TextStyle(
+                                                  fontSize: 10
+                                              ),
+                                            )
+                                        ),
+                                      );
+                                    }),
+                                  ),
                                 ),
                               );
                             }),
