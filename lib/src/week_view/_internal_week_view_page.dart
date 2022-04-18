@@ -178,9 +178,9 @@ class InternalWeekViewPage<T> extends StatelessWidget {
                             margin: EdgeInsets.only(top: 10),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: List.generate(7, (index) {
-                                final events =
-                                controller
+                              children:
+                                  List.generate(filteredDates.length, (index) {
+                                final events = controller
                                     .getEventsOnDay(filteredDates[index])
                                     .where((element) => element.allDay)
                                     .toList();
@@ -189,31 +189,33 @@ class InternalWeekViewPage<T> extends StatelessWidget {
                                     width: weekTitleWidth,
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
-                                      children: List.generate(events.length,
-                                              (index) {
-                                            return GestureDetector(
-                                              onTap: () {
-                                                if(onTileTap != null) {
-                                                  onTileTap!(events,
-                                                      filteredDates[index]);
-                                                }
-                                              },
-                                              child: Container(
-                                                width: weekTitleWidth - 4,
-                                                padding: EdgeInsets.all(5),
-                                                margin: EdgeInsets.only(bottom: 5),
-                                                decoration: BoxDecoration(
-                                                    color: events[index].color,
-                                                    borderRadius:
+                                      children:
+                                          List.generate(events.length, (index) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            if (onTileTap != null) {
+                                              onTileTap!(
+                                                  controller.getEventsOnDay(
+                                                      filteredDates[index]),
+                                                  filteredDates[index]);
+                                            }
+                                          },
+                                          child: Container(
+                                            width: weekTitleWidth - 4,
+                                            padding: EdgeInsets.all(5),
+                                            margin: EdgeInsets.only(bottom: 5),
+                                            decoration: BoxDecoration(
+                                                color: events[index].color,
+                                                borderRadius:
                                                     BorderRadius.circular(4)),
-                                                child: Center(
-                                                    child: Text(
-                                                      events[index].title,
-                                                      style: TextStyle(fontSize: 10),
-                                                    )),
-                                              ),
-                                            );
-                                          }),
+                                            child: Center(
+                                                child: Text(
+                                              events[index].title,
+                                              style: TextStyle(fontSize: 10),
+                                            )),
+                                          ),
+                                        );
+                                      }),
                                     ),
                                   ),
                                 );
