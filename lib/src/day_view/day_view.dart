@@ -314,7 +314,7 @@ class DayViewState<T> extends State<DayView<T>> {
                       onPageChanged: _onPageChange,
                       itemBuilder: (_, index) {
                         print("total days : $_totalDays");
-                        final date = DateTime(_minDate.year, _minDate.month, _minDate.day + (index+1));
+                        final date = DateTime(_minDate.year, _minDate.month, _minDate.day + (index));
                         print("date day in page view : ${date.day} + index ----- ${index}");
                         return InternalDayViewPage<T>(
                           key: ValueKey(_hourHeight.toString() + date.toString()),
