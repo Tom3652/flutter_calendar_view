@@ -177,6 +177,8 @@ class EventController<T> extends ChangeNotifier {
     events.removeWhere((element) =>
         element.date.isAfter(date) || element.endDate.isBefore(date));
 
+    print("events after :$events");
+
     final uniqueEvents = <CalendarEventData<T>>{}..addAll(events);
 
    print("unique events : $uniqueEvents");
