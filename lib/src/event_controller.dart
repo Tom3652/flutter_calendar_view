@@ -169,6 +169,9 @@ class EventController<T> extends ChangeNotifier {
       print("event for day to json after : ${element}");
     });
     final uniqueEvents = <CalendarEventData<T>>{}..addAll(events);
+
+    print("unique events : $uniqueEvents");
+
     return uniqueEvents.toList();
   }
 }
