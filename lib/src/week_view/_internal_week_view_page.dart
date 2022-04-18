@@ -194,6 +194,7 @@ class InternalWeekViewPage<T> extends StatelessWidget {
                                         return GestureDetector(
                                           onTap: () {
                                             if (onTileTap != null) {
+                                              print("date tap internal : ${filteredDates[index]} + index : $index");
                                               onTileTap!(
                                                   controller.getEventsOnDay(
                                                       filteredDates[index]),
