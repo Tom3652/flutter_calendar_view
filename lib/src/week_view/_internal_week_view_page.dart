@@ -191,7 +191,7 @@ class InternalWeekViewPage<T> extends StatelessWidget {
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children:
-                                          List.generate(events.length, (indx) {
+                                          List.generate(events.length, (indexItem) {
                                         return GestureDetector(
                                           onTap: () {
                                             if (onTileTap != null) {
@@ -207,12 +207,12 @@ class InternalWeekViewPage<T> extends StatelessWidget {
                                             padding: EdgeInsets.all(5),
                                             margin: EdgeInsets.only(bottom: 5),
                                             decoration: BoxDecoration(
-                                                color: events[index].color,
+                                                color: events[indexItem].color,
                                                 borderRadius:
                                                     BorderRadius.circular(4)),
                                             child: Center(
                                                 child: Text(
-                                              events[index].title,
+                                              events[indexItem].title,
                                               style: TextStyle(fontSize: 10),
                                             )),
                                           ),
