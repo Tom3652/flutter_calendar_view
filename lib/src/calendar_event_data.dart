@@ -68,7 +68,7 @@ class CalendarEventData<T> {
       endTime: json["endTime"] != null
           ? DateTime.fromMillisecondsSinceEpoch(json["endTime"])
           : null,
-      event: json["event"],
+      //event: json["event"],
       color: Color(json["color"]),
       description: json["description"],
     );
@@ -78,7 +78,7 @@ class CalendarEventData<T> {
         "date": date.millisecondsSinceEpoch,
         "startTime": startTime?.millisecondsSinceEpoch,
         "endTime": endTime?.millisecondsSinceEpoch,
-        "event": event,
+        //"event": event,
         "title": title,
         "uid": uid,
         "color": color.value,
