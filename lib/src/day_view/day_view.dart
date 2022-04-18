@@ -234,6 +234,8 @@ class DayViewState<T> extends State<DayView<T>> {
     _eventTileBuilder = widget.eventTileBuilder ?? _defaultEventTileBuilder;
     _dayTitleBuilder = widget.dayTitleBuilder ?? _defaultDayBuilder;
 
+    print("initial day : $_initialDay");
+    print("min day : $_minDate");
   }
 
   @override
@@ -311,7 +313,7 @@ class DayViewState<T> extends State<DayView<T>> {
                       onPageChanged: _onPageChange,
                       itemBuilder: (_, index) {
                         final date = DateTime(_minDate.year, _minDate.month, _minDate.day + index);
-                        print("date day in page view : ${date.day}");
+                        print("date day in page view : ${date.day} + index ----- ${index}");
                         return InternalDayViewPage<T>(
                           key: ValueKey(
                               _hourHeight.toString() + date.toString()),
