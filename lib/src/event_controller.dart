@@ -158,8 +158,16 @@ class EventController<T> extends ChangeNotifier {
       }
     }
 
+    events.forEach((element) {
+      print("event for day to json before : ${element}");
+    });
+
     events.removeWhere((element) =>
         element.date.isAfter(date) || element.endDate.isBefore(date));
+
+    events.forEach((element) {
+      print("event for day to json after : ${element}");
+    });
     final uniqueEvents = <CalendarEventData<T>>{}..addAll(events);
     return uniqueEvents.toList();
   }
