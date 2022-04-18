@@ -37,7 +37,7 @@ class EventController<T> extends ChangeNotifier {
   /// Returns list of [CalendarEventData<T>] stored in this controller.
   List<CalendarEventData<T>> get events => _eventList.toList(growable: false);
 
-  final String localization = "en";
+  String localization = "en";
 
   /// Add all the events in the list
   /// If there is an event with same date then
