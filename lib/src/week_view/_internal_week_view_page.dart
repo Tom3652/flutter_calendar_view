@@ -186,43 +186,45 @@ class InternalWeekViewPage<T> extends StatelessWidget {
                                     .where((element) => element.allDay)
                                     .toList();
                                 print("events lenght : $events");
-                                return Container(
-                                  width: weekTitleWidth,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children:
-                                        List.generate(events.length, (indexItem) {
-                                      return Container(
-                                        color: Colors.red,
-                                        width: weekTitleWidth,
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            if (onTileTap != null) {
-                                              //print("date tap internal : ${filteredDates[index]} + index : $index");
-                                              onTileTap!(
-                                                  controller.getEventsOnDay(
-                                                      filteredDates[index]),
-                                                  filteredDates[index]);
-                                            }
-                                          },
-                                          child: Container(
-                                            width: weekTitleWidth - 4,
-                                            padding: EdgeInsets.all(5),
-                                            margin: EdgeInsets.only(bottom: 5),
-                                            decoration: BoxDecoration(
-                                                color: events[indexItem].color,
-                                                borderRadius:
-                                                    BorderRadius.circular(4)),
-                                            child: Center(
-                                                child: Text(
-                                              events[indexItem].title,
-                                              style: TextStyle(fontSize: 10),
-                                            )),
+                                return Center(
+                                  child: Container(
+                                    width: weekTitleWidth,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children:
+                                          List.generate(events.length, (indexItem) {
+                                        return Container(
+                                          color: Colors.red,
+                                          width: weekTitleWidth,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              if (onTileTap != null) {
+                                                //print("date tap internal : ${filteredDates[index]} + index : $index");
+                                                onTileTap!(
+                                                    controller.getEventsOnDay(
+                                                        filteredDates[index]),
+                                                    filteredDates[index]);
+                                              }
+                                            },
+                                            child: Container(
+                                              width: weekTitleWidth - 4,
+                                              padding: EdgeInsets.all(5),
+                                              margin: EdgeInsets.only(bottom: 5),
+                                              decoration: BoxDecoration(
+                                                  color: events[indexItem].color,
+                                                  borderRadius:
+                                                      BorderRadius.circular(4)),
+                                              child: Center(
+                                                  child: Text(
+                                                events[indexItem].title,
+                                                style: TextStyle(fontSize: 10),
+                                              )),
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    }),
+                                        );
+                                      }),
+                                    ),
                                   ),
                                 );
                               }),

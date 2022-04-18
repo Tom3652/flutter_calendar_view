@@ -142,27 +142,27 @@ class EventController<T> extends ChangeNotifier {
     }
 
     //print("ranging events : $_rangingEventList");
-    print("today date : $date");
+    print("get event in controller for date : $date");
 
     final daysFromRange = <DateTime>[];
     for (final rangingEvent in _rangingEventList) {
-    //  print("ranging event : $rangingEvent");
+      print("ranging event : $rangingEvent");
       for (var i = 0;
           i <= rangingEvent.endDate.difference(rangingEvent.date).inDays;
           i++) {
         if(rangingEvent.title == "Test") {
-      //    print("ranging event date : ${rangingEvent.date}");
+          print("ranging event date : ${rangingEvent.date}");
         }
         daysFromRange.add(rangingEvent.date.add(Duration(days: i)));
       }
-     // print("days from range : $daysFromRange");
+      print("days from range : $daysFromRange");
       if (rangingEvent.date.isBefore(rangingEvent.endDate)) {
         for (final eventDay in daysFromRange) {
-       //   print("event day : $eventDay");
-          if(rangingEvent.title == "Test") {
+          print("event day : $eventDay");
+
          //   print("event day : ${eventDay.day}");
           //  print("date day : ${date.day}");
-          }
+
           if (eventDay.year == date.year &&
               eventDay.month == date.month &&
               eventDay.day == date.day) {
@@ -172,14 +172,14 @@ class EventController<T> extends ChangeNotifier {
       }
     }
 
-  //  print("events :$events");
+    print("events :$events");
 
     events.removeWhere((element) =>
         element.date.isAfter(date) || element.endDate.isBefore(date));
 
     final uniqueEvents = <CalendarEventData<T>>{}..addAll(events);
 
-   // print("unique events : $uniqueEvents");
+   print("unique events : $uniqueEvents");
 
     return uniqueEvents.toList();
   }
