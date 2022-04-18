@@ -131,6 +131,8 @@ class EventController<T> extends ChangeNotifier {
       }
     }
 
+    print("Ranging events : $_rangingEventList");
+
     final daysFromRange = <DateTime>[];
     for (final rangingEvent in _rangingEventList) {
       for (var i = 0;
@@ -149,7 +151,9 @@ class EventController<T> extends ChangeNotifier {
       }
     }
 
-    final uniqueEvents = <CalendarEventData<T>> {}..addAll(events);
+    events.removeWhere((element) =>
+        element.date.isAfter(date) || element.endDate.isBefore(date));
+    final uniqueEvents = <CalendarEventData<T>>{}..addAll(events);
     return uniqueEvents.toList();
   }
 }
