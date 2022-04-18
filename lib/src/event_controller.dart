@@ -150,8 +150,10 @@ class EventController<T> extends ChangeNotifier {
           i++) {
         daysFromRange.add(rangingEvent.date.add(Duration(days: i)));
       }
+      print("days from range : $daysFromRange");
       if (rangingEvent.date.isBefore(rangingEvent.endDate)) {
         for (final eventDay in daysFromRange) {
+          print("event day : $eventDay");
           if (eventDay.year == date.year &&
               eventDay.month == date.month &&
               eventDay.day == date.day) {
@@ -160,6 +162,8 @@ class EventController<T> extends ChangeNotifier {
         }
       }
     }
+
+    print("events :$events");
 
     events.forEach((element) {
       print("event for day to json before : ${element}");
