@@ -39,6 +39,8 @@ class CalendarEventData<T> {
 
   final String uid;
 
+  final bool allDay;
+
   /// Stores all the events on [date]
   const CalendarEventData({
     required this.title,
@@ -47,6 +49,7 @@ class CalendarEventData<T> {
     this.color = Colors.blue,
     this.startTime,
     this.endTime,
+    this.allDay=false,
     DateTime? endDate,
     required this.date,
     required this.uid,
@@ -69,6 +72,7 @@ class CalendarEventData<T> {
           ? DateTime.fromMillisecondsSinceEpoch(json["endTime"])
           : null,
       //event: json["event"],
+      allDay: json["allDay"] ?? false,
       color: Color(json["color"]),
       description: json["description"],
     );
@@ -80,6 +84,7 @@ class CalendarEventData<T> {
         "endTime": endTime?.millisecondsSinceEpoch,
         //"event": event,
         "title": title,
+        "allDay": allDay,
         "uid": uid,
         "color": color.value,
         "description": description,
