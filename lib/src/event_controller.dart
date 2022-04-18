@@ -114,7 +114,6 @@ class EventController<T> extends ChangeNotifier {
     notifyListeners();
   }
 
-
   /// Returns events on given day.
   ///
   /// To overwrite default behaviour of this function,
@@ -150,7 +149,7 @@ class EventController<T> extends ChangeNotifier {
       for (var i = 0;
           i <= rangingEvent.endDate.difference(rangingEvent.date).inDays;
           i++) {
-        if(rangingEvent.title == "Test") {
+        if (rangingEvent.title == "Test") {
           print("ranging event date : ${rangingEvent.date}");
         }
         daysFromRange.add(rangingEvent.date.add(Duration(days: i)));
@@ -160,7 +159,7 @@ class EventController<T> extends ChangeNotifier {
         for (final eventDay in daysFromRange) {
           print("event day : $eventDay");
 
-         //   print("event day : ${eventDay.day}");
+          //   print("event day : ${eventDay.day}");
           //  print("date day : ${date.day}");
 
           if (eventDay.year == date.year &&
@@ -173,15 +172,29 @@ class EventController<T> extends ChangeNotifier {
     }
 
     print("events :$events");
-    //events.removeWhere((element) => element.date.isAfter(date) || element.endDate.isBefore(date));
+    events.removeWhere((element) => !isEventInRange(element, date));
 
     print("events after :$events");
 
     final uniqueEvents = <CalendarEventData<T>>{}..addAll(events);
 
-   print("unique events : $uniqueEvents");
+    print("unique events : $uniqueEvents");
 
     return uniqueEvents.toList();
+  }
+
+  bool isEventInRange(
+      CalendarEventData<T> calendarEventData, DateTime selectedDate) {
+    final start = calendarEventData.date;
+    final end = calendarEventData.endDate;
+    if (start.isAtSameMomentAs(selectedDate) ||
+        end.isAtSameMomentAs(selectedDate)) {
+      return true;
+    }
+    if (start.isBefore(selectedDate) && (end.isAfter(selectedDate))) {
+      return true;
+    }
+    return false;
   }
 }
 
