@@ -310,9 +310,10 @@ class DayViewState<T> extends State<DayView<T>> {
                     child: PageView.builder(
                       itemCount: _totalDays,
                       controller: _pageController,
+                      physics: BouncingScrollPhysics(),
                       onPageChanged: _onPageChange,
                       itemBuilder: (_, index) {
-                        final date = DateTime(_minDate.year, _minDate.month, _minDate.day + index);
+                        final date = DateTime(_minDate.year, _minDate.month, _minDate.day + (index-1));
                         print("date day in page view : ${date.day} + index ----- ${index}");
                         return InternalDayViewPage<T>(
                           key: ValueKey(
