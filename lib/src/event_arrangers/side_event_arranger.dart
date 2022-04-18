@@ -133,8 +133,8 @@ class SideEventArranger<T> extends EventArranger<T> {
 
       final start = startTime.getTotalMinutes;
       final end = endTime.getTotalMinutes;
-      assert(
-      !(endTime.getTotalMinutes <= startTime.getTotalMinutes),
+
+      assert((endTime.getTotalMinutes >= startTime.getTotalMinutes),
       "Assertion fail for event: \n$event\n"
           "startTime must be less than endTime.\n"
           "This error occurs when you does not provide startTime or endTime in "
