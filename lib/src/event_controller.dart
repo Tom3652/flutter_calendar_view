@@ -54,6 +54,10 @@ class EventController<T> extends ChangeNotifier {
     notifyListeners();
   }
 
+  String getLocalizedDayForEvent() {
+    return "Entire day";
+  }
+
   /// Removes [event] from this controller.
   void remove(CalendarEventData<T> event) {
     for (final e in _events) {

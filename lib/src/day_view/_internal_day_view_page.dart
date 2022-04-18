@@ -2,6 +2,7 @@
 // Use of this source code is governed by a MIT-style license
 // that can be found in the LICENSE file.
 
+import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 
 import '../components/_internal_components.dart';
@@ -93,77 +94,114 @@ class InternalDayViewPage<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final eventsAllDay =
-        controller.getEventsOnDay(date).where((element) => element.allDay);
+    final List<CalendarEventData<T>> eventsAllDay =
+    controller.getEventsOnDay(date).where((element) => element.allDay).toList();
     final isEventAllDay = eventsAllDay.isNotEmpty;
     return Container(
       height: height,
       width: width,
-      child: Stack(
+      child: Column(
         children: [
           if (isEventAllDay)
-            GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    childAspectRatio: 2,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10),
-                itemCount: eventsAllDay.length,
-                itemBuilder: (ctx, index) {
-                  return Container(color: Colors.red);
-                }),
-          CustomPaint(
-            size: Size(width, height),
-            painter: HourLinePainter(
-              lineColor: hourIndicatorSettings.color,
-              lineHeight: hourIndicatorSettings.height,
-              offset: timeLineWidth + hourIndicatorSettings.offset,
-              minuteHeight: heightPerMinute,
-              verticalLineOffset: verticalLineOffset,
-              showVerticalLine: showVerticalLine,
+            Row(
+              children: [
+                Container(
+                  width: timeLineWidth,
+                  height: 40,
+                  child: Text(controller.getLocalizedDayForEvent()),
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: Container(
+                    color: Colors.blue,
+                    child: GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            childAspectRatio: 2,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10),
+                        itemCount: eventsAllDay.length,
+                        itemBuilder: (ctx, index) {
+                          return Container(
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                                color: eventsAllDay[index].color,
+                              borderRadius: BorderRadius.circular(8)
+                            ),
+                            child: Center(
+                              child: Text(
+                                eventsAllDay[index].title,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14
+                                ),
+                              ),
+                            ),
+                          );
+                        }),
+                  ),
+                ),
+              ],
             ),
-          ),
-          if (showLiveLine && liveTimeIndicatorSettings.height > 0)
-            LiveTimeIndicator(
-              liveTimeIndicatorSettings: liveTimeIndicatorSettings,
-              width: width,
-              height: height,
-              heightPerMinute: heightPerMinute,
-              timeLineWidth: timeLineWidth,
-            ),
-          PressDetector(
-            width: width,
-            height: height,
-            hourHeight: hourHeight,
-            date: date,
-            onDateLongPress: onDateLongPress,
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: EventGenerator<T>(
-              height: height,
-              date: date,
-              onTileTap: onTileTap,
-              eventArranger: eventArranger,
-              events: controller
-                  .getEventsOnDay(date)
-                  .where((element) => !element.allDay)
-                  .toList(),
-              heightPerMinute: heightPerMinute,
-              eventTileBuilder: eventTileBuilder,
-              width: width -
-                  timeLineWidth -
-                  hourIndicatorSettings.offset -
-                  verticalLineOffset,
-            ),
-          ),
-          TimeLine(
-            height: height,
-            hourHeight: hourHeight,
-            timeLineBuilder: timeLineBuilder,
-            timeLineOffset: timeLineOffset,
-            timeLineWidth: timeLineWidth,
-            key: ValueKey(heightPerMinute),
+          SizedBox(height: 10),
+          Stack(
+            children: [
+              CustomPaint(
+                size: Size(width, height),
+                painter: HourLinePainter(
+                  lineColor: hourIndicatorSettings.color,
+                  lineHeight: hourIndicatorSettings.height,
+                  offset: timeLineWidth + hourIndicatorSettings.offset,
+                  minuteHeight: heightPerMinute,
+                  verticalLineOffset: verticalLineOffset,
+                  showVerticalLine: showVerticalLine,
+                ),
+              ),
+              if (showLiveLine && liveTimeIndicatorSettings.height > 0)
+                LiveTimeIndicator(
+                  liveTimeIndicatorSettings: liveTimeIndicatorSettings,
+                  width: width,
+                  height: height,
+                  heightPerMinute: heightPerMinute,
+                  timeLineWidth: timeLineWidth,
+                ),
+              PressDetector(
+                width: width,
+                height: height,
+                hourHeight: hourHeight,
+                date: date,
+                onDateLongPress: onDateLongPress,
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: EventGenerator<T>(
+                  height: height,
+                  date: date,
+                  onTileTap: onTileTap,
+                  eventArranger: eventArranger,
+                  events: controller
+                      .getEventsOnDay(date)
+                      .where((element) => !element.allDay)
+                      .toList(),
+                  heightPerMinute: heightPerMinute,
+                  eventTileBuilder: eventTileBuilder,
+                  width: width -
+                      timeLineWidth -
+                      hourIndicatorSettings.offset -
+                      verticalLineOffset,
+                ),
+              ),
+              TimeLine(
+                height: height,
+                hourHeight: hourHeight,
+                timeLineBuilder: timeLineBuilder,
+                timeLineOffset: timeLineOffset,
+                timeLineWidth: timeLineWidth,
+                key: ValueKey(heightPerMinute),
+              ),
+            ],
           ),
         ],
       ),
