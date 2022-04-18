@@ -114,6 +114,7 @@ class EventController<T> extends ChangeNotifier {
     notifyListeners();
   }
 
+
   /// Returns events on given day.
   ///
   /// To overwrite default behaviour of this function,
@@ -139,6 +140,8 @@ class EventController<T> extends ChangeNotifier {
         }
       }
     }
+
+    print("ranging events : $_rangingEventList");
 
     final daysFromRange = <DateTime>[];
     for (final rangingEvent in _rangingEventList) {
