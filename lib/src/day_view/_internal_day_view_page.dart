@@ -93,11 +93,25 @@ class InternalDayViewPage<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final eventsAllDay =
+        controller.getEventsOnDay(date).where((element) => element.allDay);
+    final isEventAllDay = eventsAllDay.isNotEmpty;
     return Container(
       height: height,
       width: width,
       child: Stack(
         children: [
+          if (isEventAllDay)
+            GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    childAspectRatio: 2,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10),
+                itemCount: eventsAllDay.length,
+                itemBuilder: (ctx, index) {
+                  return Container(color: Colors.red);
+                }),
           CustomPaint(
             size: Size(width, height),
             painter: HourLinePainter(
@@ -131,7 +145,10 @@ class InternalDayViewPage<T> extends StatelessWidget {
               date: date,
               onTileTap: onTileTap,
               eventArranger: eventArranger,
-              events: controller.getEventsOnDay(date),
+              events: controller
+                  .getEventsOnDay(date)
+                  .where((element) => !element.allDay)
+                  .toList(),
               heightPerMinute: heightPerMinute,
               eventTileBuilder: eventTileBuilder,
               width: width -

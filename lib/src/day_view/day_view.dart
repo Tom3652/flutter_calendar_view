@@ -233,6 +233,7 @@ class DayViewState<T> extends State<DayView<T>> {
     _timeLineBuilder = widget.timeLineBuilder ?? _defaultTimeLineBuilder;
     _eventTileBuilder = widget.eventTileBuilder ?? _defaultEventTileBuilder;
     _dayTitleBuilder = widget.dayTitleBuilder ?? _defaultDayBuilder;
+
   }
 
   @override
@@ -300,6 +301,7 @@ class DayViewState<T> extends State<DayView<T>> {
               _dayTitleBuilder(_currentDate),
               Expanded(
                 child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
                   controller: _scrollController,
                   child: SizedBox(
                     height: _height,
@@ -310,7 +312,6 @@ class DayViewState<T> extends State<DayView<T>> {
                       itemBuilder: (_, index) {
                         final date = DateTime(_minDate.year, _minDate.month,
                             _minDate.day + index);
-
                         return InternalDayViewPage<T>(
                           key: ValueKey(
                               _hourHeight.toString() + date.toString()),
