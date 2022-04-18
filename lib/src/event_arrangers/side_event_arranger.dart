@@ -17,16 +17,19 @@ class SideEventArranger<T> extends EventArranger<T> {
     required double heightPerMinute,
   }) {
     final durations = _getEventsDuration(events);
-    final tempEvents = [...events]..sort((e1, e2) =>
-        (e1.startTime?.getTotalMinutes ?? 0) -
-        (e2.startTime?.getTotalMinutes ?? 0));
+    final tempEvents = [...events]
+      ..sort((e1, e2) =>
+      (e1.startTime?.getTotalMinutes ?? 0) -
+          (e2.startTime?.getTotalMinutes ?? 0));
 
     final table = List.generate(
       events.length,
-      (index) => List.generate(
-        durations.length,
-        (index) => null as CalendarEventData<T>?, // ignore: unnecessary_cast
-      ),
+          (index) =>
+          List.generate(
+            durations.length,
+                (index) =>
+            null as CalendarEventData<T>?, // ignore: unnecessary_cast
+          ),
     );
 
     var eventCounter = 0;
@@ -97,8 +100,8 @@ class SideEventArranger<T> extends EventArranger<T> {
     return arrangedEvent;
   }
 
-  int _containsEvent(
-      List<OrganizedCalendarEventData<T>> events, CalendarEventData<T>? event) {
+  int _containsEvent(List<OrganizedCalendarEventData<T>> events,
+      CalendarEventData<T>? event) {
     for (var i = 0; i < events.length; i++) {
       if (events[i].events.isNotEmpty && events[i].events[0] == event) return i;
     }
@@ -124,17 +127,19 @@ class SideEventArranger<T> extends EventArranger<T> {
   List<int> _getEventsDuration(List<CalendarEventData<T>> events) {
     final durations = <int>[];
     for (final event in events) {
+
       final startTime = event.startTime ?? DateTime.now();
       final endTime = event.endTime ?? startTime;
-      assert(
-          !(endTime.getTotalMinutes <= startTime.getTotalMinutes),
-          "Assertion fail for event: \n$event\n"
-          "startDate must be less than endDate.\n"
-          "This error occurs when you does not provide startDate or endDate in "
-          "CalendarEventDate or provided endDate occurs before startDate.");
 
       final start = startTime.getTotalMinutes;
       final end = endTime.getTotalMinutes;
+      assert(
+      !(endTime.getTotalMinutes <= startTime.getTotalMinutes),
+      "Assertion fail for event: \n$event\n"
+          "startTime must be less than endTime.\n"
+          "This error occurs when you does not provide startTime or endTime in "
+          "CalendarEventDate or provided endTime occurs before startTime.");
+
       int i;
 
       /// Get position where we can add start duration
@@ -143,8 +148,9 @@ class SideEventArranger<T> extends EventArranger<T> {
       /// Check if start duration is not repeating or if i is equal to length
       /// of durations list then add duration because duration will not be
       /// repeating if there is no element at i index.
-      if (i == durations.length || durations[i] != start)
+      if (i == durations.length || durations[i] != start) {
         durations.insert(i, start);
+      }
 
       /// Get position where we can add end duration.
       for (i = i + 1; i < durations.length && durations[i] < end; i++) {}
@@ -152,9 +158,86 @@ class SideEventArranger<T> extends EventArranger<T> {
       /// Check if end duration is not repeating or if i is equal to length of
       /// durations list then add duration because duration will not be
       /// repeating if there is no element at i index.
-      if (i == durations.length || durations[i] != end)
+      if (i == durations.length || durations[i] != end) {
         durations.insert(i, end);
+      }
+
+      /*
+      if (event.date.compareWithoutTime(event.endDate)) {
+        assert(
+        !(endTime.getTotalMinutes <= startTime.getTotalMinutes),
+        "Assertion fail for event: \n$event\n"
+            "startTime must be less than endTime.\n"
+            "This error occurs when you does not provide startTime or endTime in "
+            "CalendarEventDate or provided endTime occurs before startTime.");
+
+        int i;
+
+        /// Get position where we can add start duration
+        for (i = 0; i < durations.length && durations[i] < start; i++) {}
+
+        /// Check if start duration is not repeating or if i is equal to length
+        /// of durations list then add duration because duration will not be
+        /// repeating if there is no element at i index.
+        if (i == durations.length || durations[i] != start) {
+          durations.insert(i, start);
+        }
+
+        /// Get position where we can add end duration.
+        for (i = i + 1; i < durations.length && durations[i] < end; i++) {}
+
+        /// Check if end duration is not repeating or if i is equal to length of
+        /// durations list then add duration because duration will not be
+        /// repeating if there is no element at i index.
+        if (i == durations.length || durations[i] != end) {
+          durations.insert(i, end);
+        }
+      }
+      else {
+        /// End time is on the next day
+        if (endTime.getTotalMinutes <= startTime.getTotalMinutes) {
+
+          int i;
+
+          /// Get position where we can add start duration
+          for (i = 0; i < durations.length && durations[i] < start; i++) {}
+
+          /// Check if start duration is not repeating or if i is equal to length
+          /// of durations list then add duration because duration will not be
+          /// repeating if there is no element at i index.
+          if (i == durations.length || durations[i] != start) {
+            durations.insert(i, start);
+          }
+
+        }
+        else {
+          int i;
+
+          /// Get position where we can add start duration
+          for (i = 0; i < durations.length && durations[i] < start; i++) {}
+
+          /// Check if start duration is not repeating or if i is equal to length
+          /// of durations list then add duration because duration will not be
+          /// repeating if there is no element at i index.
+          if (i == durations.length || durations[i] != start) {
+            durations.insert(i, start);
+          }
+
+          /// Get position where we can add end duration.
+          for (i = i + 1; i < durations.length && durations[i] < end; i++) {}
+
+          /// Check if end duration is not repeating or if i is equal to length of
+          /// durations list then add duration because duration will not be
+          /// repeating if there is no element at i index.
+          if (i == durations.length || durations[i] != end) {
+            durations.insert(i, end);
+          }
+        }
+      }
+
+       */
     }
     return durations;
   }
+
 }
