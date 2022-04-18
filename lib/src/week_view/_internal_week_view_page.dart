@@ -159,73 +159,73 @@ class InternalWeekViewPage<T> extends StatelessWidget {
           Expanded(
             child: SingleChildScrollView(
               controller: scrollController,
-              child: SizedBox(
-                height: height,
-                width: width,
-                child: Column(
-                  children: [
-                    if (isEventAllDay)
-                      Row(
-                        children: [
-                          Container(
-                            child: Text(
-                              controller.getLocalizedDayForEvent(),
-                              style: TextStyle(
-                                fontSize: 12,
-                              ),
-                              textAlign: TextAlign.center,
+              child: Column(
+                children: [
+                  if (isEventAllDay)
+                    Row(
+                      children: [
+                        Container(
+                          child: Text(
+                            controller.getLocalizedDayForEvent(),
+                            style: TextStyle(
+                              fontSize: 12,
                             ),
-                            width: timeLineWidth,
+                            textAlign: TextAlign.center,
                           ),
-                          Container(
-                              margin: EdgeInsets.only(top: 10),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: List.generate(7, (index) {
-                                  final events =
-                                      controller
-                                          .getEventsOnDay(filteredDates[index])
-                                          .where((element) => element.allDay)
-                                          .toList();
-                                  return Center(
-                                    child: Container(
-                                      width: weekTitleWidth,
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: List.generate(events.length,
-                                            (index) {
-                                          return GestureDetector(
-                                            onTap: () {
-                                              if(onTileTap != null) {
-                                                onTileTap!(events,
-                                                    filteredDates[index]);
-                                              }
-                                            },
-                                            child: Container(
-                                              width: weekTitleWidth - 4,
-                                              padding: EdgeInsets.all(5),
-                                              margin: EdgeInsets.only(bottom: 5),
-                                              decoration: BoxDecoration(
-                                                  color: events[index].color,
-                                                  borderRadius:
-                                                      BorderRadius.circular(4)),
-                                              child: Center(
-                                                  child: Text(
-                                                events[index].title,
-                                                style: TextStyle(fontSize: 10),
-                                              )),
-                                            ),
-                                          );
-                                        }),
-                                      ),
+                          width: timeLineWidth,
+                        ),
+                        Container(
+                            margin: EdgeInsets.only(top: 10),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: List.generate(7, (index) {
+                                final events =
+                                controller
+                                    .getEventsOnDay(filteredDates[index])
+                                    .where((element) => element.allDay)
+                                    .toList();
+                                return Center(
+                                  child: Container(
+                                    width: weekTitleWidth,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: List.generate(events.length,
+                                              (index) {
+                                            return GestureDetector(
+                                              onTap: () {
+                                                if(onTileTap != null) {
+                                                  onTileTap!(events,
+                                                      filteredDates[index]);
+                                                }
+                                              },
+                                              child: Container(
+                                                width: weekTitleWidth - 4,
+                                                padding: EdgeInsets.all(5),
+                                                margin: EdgeInsets.only(bottom: 5),
+                                                decoration: BoxDecoration(
+                                                    color: events[index].color,
+                                                    borderRadius:
+                                                    BorderRadius.circular(4)),
+                                                child: Center(
+                                                    child: Text(
+                                                      events[index].title,
+                                                      style: TextStyle(fontSize: 10),
+                                                    )),
+                                              ),
+                                            );
+                                          }),
                                     ),
-                                  );
-                                }),
-                              ))
-                        ],
-                      ),
-                    if (isEventAllDay) SizedBox(height: 15),
-                    Stack(
+                                  ),
+                                );
+                              }),
+                            ))
+                      ],
+                    ),
+                  if (isEventAllDay) SizedBox(height: 15),
+                  SizedBox(
+                    height: height,
+                    width: width,
+                    child: Stack(
                       children: [
                         CustomPaint(
                           size: Size(width, height),
@@ -306,8 +306,8 @@ class InternalWeekViewPage<T> extends StatelessWidget {
                         ),
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
