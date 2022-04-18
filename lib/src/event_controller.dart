@@ -131,8 +131,6 @@ class EventController<T> extends ChangeNotifier {
       }
     }
 
-    print("Ranging events : $_rangingEventList");
-
     final daysFromRange = <DateTime>[];
     for (final rangingEvent in _rangingEventList) {
       for (var i = 0;
