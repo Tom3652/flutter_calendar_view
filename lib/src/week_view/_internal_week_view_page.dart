@@ -119,11 +119,15 @@ class InternalWeekViewPage<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final filteredDates = _filteredDate();
     bool isEventAllDay = false;
-    filteredDates.forEach((date) {
+    for (DateTime date in filteredDates) {
       isEventAllDay = controller
           .getEventsOnDay(date)
-          .where((element) => element.allDay).isNotEmpty;
-    });
+          .where((element) => element.allDay)
+          .isNotEmpty;
+      if (isEventAllDay) {
+        break;
+      }
+    }
     return Container(
       height: height + weekTitleHeight,
       width: width,
@@ -160,55 +164,58 @@ class InternalWeekViewPage<T> extends StatelessWidget {
                 width: width,
                 child: Column(
                   children: [
-                    if(isEventAllDay) Row(
-                      children: [
-                        Container(
-                          child: Text(
-                            controller.getLocalizedDayForEvent(),
-                            style: TextStyle(
-                              fontSize: 12,
+                    if (isEventAllDay)
+                      Row(
+                        children: [
+                          Container(
+                            child: Text(
+                              controller.getLocalizedDayForEvent(),
+                              style: TextStyle(
+                                fontSize: 12,
+                              ),
+                              textAlign: TextAlign.center,
                             ),
-                            textAlign: TextAlign.center,
+                            width: timeLineWidth,
                           ),
-                          width: timeLineWidth,
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 10),
-                          child: Row(
-                            children: List.generate(7, (index) {
-                              final List<CalendarEventData> events = controller.getEventsOnDay(filteredDates[index]).where((element) => element.allDay).toList();
-                              return Center(
-                                child: Container(
-                                  width: weekTitleWidth,
-                                  child: Column(
-                                    children: List.generate(events.length, (index) {
-                                      return Container(
-                                        width: weekTitleWidth-4,
-                                        padding: EdgeInsets.all(5),
-                                        margin: EdgeInsets.only(bottom: 10),
-                                        decoration: BoxDecoration(
-                                            color: events[index].color,
-                                            borderRadius: BorderRadius.circular(4)
-                                        ),
-                                        child: Center(
-                                            child: Text(
+                          Container(
+                              margin: EdgeInsets.only(top: 10),
+                              child: Row(
+                                children: List.generate(7, (index) {
+                                  final List<CalendarEventData> events =
+                                      controller
+                                          .getEventsOnDay(filteredDates[index])
+                                          .where((element) => element.allDay)
+                                          .toList();
+                                  return Center(
+                                    child: Container(
+                                      width: weekTitleWidth,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: List.generate(events.length,
+                                            (index) {
+                                          return Container(
+                                            width: weekTitleWidth - 4,
+                                            padding: EdgeInsets.all(5),
+                                            margin: EdgeInsets.only(bottom: 10),
+                                            decoration: BoxDecoration(
+                                                color: events[index].color,
+                                                borderRadius:
+                                                    BorderRadius.circular(4)),
+                                            child: Center(
+                                                child: Text(
                                               events[index].title,
-                                              style: TextStyle(
-                                                  fontSize: 10
-                                              ),
-                                            )
-                                        ),
-                                      );
-                                    }),
-                                  ),
-                                ),
-                              );
-                            }),
-                          )
-                        )
-                      ],
-                    ),
-                    if(isEventAllDay) SizedBox(height: 15),
+                                              style: TextStyle(fontSize: 10),
+                                            )),
+                                          );
+                                        }),
+                                      ),
+                                    ),
+                                  );
+                                }),
+                              ))
+                        ],
+                      ),
+                    if (isEventAllDay) SizedBox(height: 15),
                     Stack(
                       children: [
                         CustomPaint(
@@ -216,15 +223,18 @@ class InternalWeekViewPage<T> extends StatelessWidget {
                           painter: HourLinePainter(
                             lineColor: hourIndicatorSettings.color,
                             lineHeight: hourIndicatorSettings.height,
-                            offset: timeLineWidth + hourIndicatorSettings.offset,
+                            offset:
+                                timeLineWidth + hourIndicatorSettings.offset,
                             minuteHeight: heightPerMinute,
                             verticalLineOffset: verticalLineOffset,
                             showVerticalLine: showVerticalLine,
                           ),
                         ),
-                        if (showLiveLine && liveTimeIndicatorSettings.height > 0)
+                        if (showLiveLine &&
+                            liveTimeIndicatorSettings.height > 0)
                           LiveTimeIndicator(
-                            liveTimeIndicatorSettings: liveTimeIndicatorSettings,
+                            liveTimeIndicatorSettings:
+                                liveTimeIndicatorSettings,
                             width: width,
                             height: height,
                             heightPerMinute: heightPerMinute,
@@ -266,8 +276,8 @@ class InternalWeekViewPage<T> extends StatelessWidget {
                                           width: weekTitleWidth,
                                           eventArranger: eventArranger,
                                           eventTileBuilder: eventTileBuilder,
-                                          events: controller
-                                              .getEventsOnDay(filteredDates[index]),
+                                          events: controller.getEventsOnDay(
+                                              filteredDates[index]),
                                           heightPerMinute: heightPerMinute,
                                         ),
                                       ],
