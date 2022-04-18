@@ -149,6 +149,9 @@ class EventController<T> extends ChangeNotifier {
       for (var i = 0;
           i <= rangingEvent.endDate.difference(rangingEvent.date).inDays;
           i++) {
+        if(rangingEvent.title == "Test") {
+          print("ranging event date : ${rangingEvent.date}");
+        }
         daysFromRange.add(rangingEvent.date.add(Duration(days: i)));
       }
       print("days from range : $daysFromRange");
@@ -166,16 +169,9 @@ class EventController<T> extends ChangeNotifier {
 
     print("events :$events");
 
-    events.forEach((element) {
-      print("event for day to json before : ${element}");
-    });
-
     events.removeWhere((element) =>
         element.date.isAfter(date) || element.endDate.isBefore(date));
 
-    events.forEach((element) {
-      print("event for day to json after : ${element}");
-    });
     final uniqueEvents = <CalendarEventData<T>>{}..addAll(events);
 
     print("unique events : $uniqueEvents");
