@@ -119,17 +119,25 @@ class InternalDayViewPage<T> extends StatelessWidget {
               sliver: SliverGrid(
                 delegate: SliverChildBuilderDelegate(
                   (ctx, index) {
-                    return Container(
-                      padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                          color: eventsAllDay[index].color,
-                          borderRadius: BorderRadius.circular(8)),
-                      child: Center(
-                        child: Text(
-                          eventsAllDay[index].title,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(color: Colors.white, fontSize: 14),
+                    return GestureDetector(
+                      onTap: () {
+                        if(onTileTap != null) {
+                          onTileTap!(controller
+                              .getEventsOnDay(date), eventsAllDay[index].date);
+                        }
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                            color: eventsAllDay[index].color,
+                            borderRadius: BorderRadius.circular(8)),
+                        child: Center(
+                          child: Text(
+                            eventsAllDay[index].title,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(color: Colors.white, fontSize: 14),
+                          ),
                         ),
                       ),
                     );
