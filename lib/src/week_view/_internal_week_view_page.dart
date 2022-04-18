@@ -185,14 +185,18 @@ class InternalWeekViewPage<T> extends StatelessWidget {
                                     .getEventsOnDay(filteredDates[index])
                                     .where((element) => element.allDay)
                                     .toList();
-                                return Center(
-                                  child: Container(
-                                    width: weekTitleWidth,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children:
-                                          List.generate(events.length, (indexItem) {
-                                        return GestureDetector(
+                                print("events lenght : $events");
+                                return Container(
+                                  width: weekTitleWidth,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children:
+                                        List.generate(events.length, (indexItem) {
+                                      return Container(
+                                        color: Colors.red,
+                                        width: weekTitleWidth,
+                                        child: GestureDetector(
                                           onTap: () {
                                             if (onTileTap != null) {
                                               //print("date tap internal : ${filteredDates[index]} + index : $index");
@@ -216,9 +220,9 @@ class InternalWeekViewPage<T> extends StatelessWidget {
                                               style: TextStyle(fontSize: 10),
                                             )),
                                           ),
-                                        );
-                                      }),
-                                    ),
+                                        ),
+                                      );
+                                    }),
                                   ),
                                 );
                               }),
