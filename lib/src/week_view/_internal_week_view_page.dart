@@ -191,7 +191,7 @@ class InternalWeekViewPage<T> extends StatelessWidget {
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children:
-                                          List.generate(events.length, (index) {
+                                          List.generate(events.length, (indx) {
                                         return GestureDetector(
                                           onTap: () {
                                             if (onTileTap != null) {
