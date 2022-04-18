@@ -100,109 +100,107 @@ class InternalDayViewPage<T> extends StatelessWidget {
     return Container(
       height: height,
       width: width,
-      child: Column(
-        children: [
+      child: CustomScrollView(
+        physics: NeverScrollableScrollPhysics(),
+        slivers: [
+          if (isEventAllDay) SliverToBoxAdapter(
+            child: Container(
+              margin: EdgeInsets.only(bottom: 10),
+              child: Text(controller.getLocalizedDayForEvent()),
+            ),
+          ),
           if (isEventAllDay)
-            Row(
-              children: [
-                Container(
-                  width: timeLineWidth,
-                  height: 40,
-                  child: Text(controller.getLocalizedDayForEvent()),
+            SliverGrid(
+              delegate: SliverChildBuilderDelegate(
+                      (ctx, index) {
+                    return Container(
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          color: eventsAllDay[index].color,
+                          borderRadius: BorderRadius.circular(8)
+                      ),
+                      child: Center(
+                        child: Text(
+                          eventsAllDay[index].title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                childCount: eventsAllDay.length,
+              ),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    childAspectRatio: 2,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10),
+
                 ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: Container(
-                    color: Colors.blue,
-                    child: GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            childAspectRatio: 2,
-                            mainAxisSpacing: 10,
-                            crossAxisSpacing: 10),
-                        itemCount: eventsAllDay.length,
-                        itemBuilder: (ctx, index) {
-                          return Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                                color: eventsAllDay[index].color,
-                              borderRadius: BorderRadius.circular(8)
-                            ),
-                            child: Center(
-                              child: Text(
-                                eventsAllDay[index].title,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14
-                                ),
-                              ),
-                            ),
-                          );
-                        }),
+          SliverPadding(padding: EdgeInsets.all(5)),
+          SliverToBoxAdapter(
+            child: Stack(
+              children: [
+                CustomPaint(
+                  size: Size(width, height),
+                  painter: HourLinePainter(
+                    lineColor: hourIndicatorSettings.color,
+                    lineHeight: hourIndicatorSettings.height,
+                    offset: timeLineWidth + hourIndicatorSettings.offset,
+                    minuteHeight: heightPerMinute,
+                    verticalLineOffset: verticalLineOffset,
+                    showVerticalLine: showVerticalLine,
                   ),
+                ),
+                if (showLiveLine && liveTimeIndicatorSettings.height > 0)
+                  LiveTimeIndicator(
+                    liveTimeIndicatorSettings: liveTimeIndicatorSettings,
+                    width: width,
+                    height: height,
+                    heightPerMinute: heightPerMinute,
+                    timeLineWidth: timeLineWidth,
+                  ),
+                PressDetector(
+                  width: width,
+                  height: height,
+                  hourHeight: hourHeight,
+                  date: date,
+                  onDateLongPress: onDateLongPress,
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: EventGenerator<T>(
+                    height: height,
+                    date: date,
+                    onTileTap: onTileTap,
+                    eventArranger: eventArranger,
+                    events: controller
+                        .getEventsOnDay(date)
+                        .where((element) => !element.allDay)
+                        .toList(),
+                    heightPerMinute: heightPerMinute,
+                    eventTileBuilder: eventTileBuilder,
+                    width: width -
+                        timeLineWidth -
+                        hourIndicatorSettings.offset -
+                        verticalLineOffset,
+                  ),
+                ),
+                TimeLine(
+                  height: height,
+                  hourHeight: hourHeight,
+                  timeLineBuilder: timeLineBuilder,
+                  timeLineOffset: timeLineOffset,
+                  timeLineWidth: timeLineWidth,
+                  key: ValueKey(heightPerMinute),
                 ),
               ],
             ),
-          SizedBox(height: 10),
-          Stack(
-            children: [
-              CustomPaint(
-                size: Size(width, height),
-                painter: HourLinePainter(
-                  lineColor: hourIndicatorSettings.color,
-                  lineHeight: hourIndicatorSettings.height,
-                  offset: timeLineWidth + hourIndicatorSettings.offset,
-                  minuteHeight: heightPerMinute,
-                  verticalLineOffset: verticalLineOffset,
-                  showVerticalLine: showVerticalLine,
-                ),
-              ),
-              if (showLiveLine && liveTimeIndicatorSettings.height > 0)
-                LiveTimeIndicator(
-                  liveTimeIndicatorSettings: liveTimeIndicatorSettings,
-                  width: width,
-                  height: height,
-                  heightPerMinute: heightPerMinute,
-                  timeLineWidth: timeLineWidth,
-                ),
-              PressDetector(
-                width: width,
-                height: height,
-                hourHeight: hourHeight,
-                date: date,
-                onDateLongPress: onDateLongPress,
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: EventGenerator<T>(
-                  height: height,
-                  date: date,
-                  onTileTap: onTileTap,
-                  eventArranger: eventArranger,
-                  events: controller
-                      .getEventsOnDay(date)
-                      .where((element) => !element.allDay)
-                      .toList(),
-                  heightPerMinute: heightPerMinute,
-                  eventTileBuilder: eventTileBuilder,
-                  width: width -
-                      timeLineWidth -
-                      hourIndicatorSettings.offset -
-                      verticalLineOffset,
-                ),
-              ),
-              TimeLine(
-                height: height,
-                hourHeight: hourHeight,
-                timeLineBuilder: timeLineBuilder,
-                timeLineOffset: timeLineOffset,
-                timeLineWidth: timeLineWidth,
-                key: ValueKey(heightPerMinute),
-              ),
-            ],
-          ),
+          )
         ],
       ),
     );
