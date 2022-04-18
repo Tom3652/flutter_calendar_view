@@ -118,6 +118,7 @@ class InternalWeekViewPage<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final filteredDates = _filteredDate();
+    print("filtered dates : $filteredDates");
     var isEventAllDay = false;
     for (var date in filteredDates) {
       isEventAllDay = controller
