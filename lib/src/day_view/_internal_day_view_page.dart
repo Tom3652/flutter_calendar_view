@@ -94,8 +94,10 @@ class InternalDayViewPage<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<CalendarEventData<T>> eventsAllDay =
-    controller.getEventsOnDay(date).where((element) => element.allDay).toList();
+    final List<CalendarEventData<T>> eventsAllDay = controller
+        .getEventsOnDay(date)
+        .where((element) => element.allDay)
+        .toList();
     final isEventAllDay = eventsAllDay.isNotEmpty;
     return Container(
       height: height,
@@ -103,44 +105,41 @@ class InternalDayViewPage<T> extends StatelessWidget {
       child: CustomScrollView(
         physics: NeverScrollableScrollPhysics(),
         slivers: [
-          if (isEventAllDay) SliverToBoxAdapter(
-            child: Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: Text(controller.getLocalizedDayForEvent()),
+          if (isEventAllDay)
+            SliverToBoxAdapter(
+              child: Container(
+                margin: EdgeInsets.only(bottom: 10, top: 10, left: 10),
+                child: Text(controller.getLocalizedDayForEvent(),
+                    style: Theme.of(context).textTheme.bodyText1),
+              ),
             ),
-          ),
           if (isEventAllDay)
             SliverGrid(
               delegate: SliverChildBuilderDelegate(
-                      (ctx, index) {
-                    return Container(
-                      padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                          color: eventsAllDay[index].color,
-                          borderRadius: BorderRadius.circular(8)
+                (ctx, index) {
+                  return Container(
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                        color: eventsAllDay[index].color,
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Center(
+                      child: Text(
+                        eventsAllDay[index].title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: Colors.white, fontSize: 14),
                       ),
-                      child: Center(
-                        child: Text(
-                          eventsAllDay[index].title,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14
-                          ),
-                        ),
-                      ),
-                    );
-                  },
+                    ),
+                  );
+                },
                 childCount: eventsAllDay.length,
               ),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    childAspectRatio: 2,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10),
-
-                ),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  childAspectRatio: 2,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10),
+            ),
           SliverPadding(padding: EdgeInsets.all(5)),
           SliverToBoxAdapter(
             child: Stack(
