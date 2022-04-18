@@ -145,6 +145,7 @@ class EventController<T> extends ChangeNotifier {
 
     final daysFromRange = <DateTime>[];
     for (final rangingEvent in _rangingEventList) {
+      print("ranging event : $rangingEvent");
       for (var i = 0;
           i <= rangingEvent.endDate.difference(rangingEvent.date).inDays;
           i++) {
