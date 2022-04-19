@@ -170,6 +170,7 @@ class FilledCell<T> extends StatelessWidget {
                                   maxLines: 1,
                                   maxFontSize: 12,
                                   minFontSize: 8,
+
                                   style: TextStyle(
                                     color: events[index].color.accent,
                                     fontSize: 12,
