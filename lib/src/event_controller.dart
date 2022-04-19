@@ -196,7 +196,9 @@ class EventController<T> extends ChangeNotifier {
     final differenceEnd = end.difference(selectedDate).inMilliseconds;
     print("Difference start : $differenceStart");
     print("Difference end : $differenceEnd");
-    if (differenceStart >= 0 && differenceEnd >= 0) {
+    if (differenceStart >= 0 &&
+        (differenceEnd >= 0 ||
+            (differenceEnd < 0 && end.day == selectedDate.day))) {
       print(
           "Start is before selected AND end is after selected so we don't remove");
       return true;
