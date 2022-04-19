@@ -34,6 +34,8 @@ class EventController<T> extends ChangeNotifier {
   // Stores all the ranging events in a list.
   final _rangingEventList = <CalendarEventData<T>>[];
 
+  //final Map<int, CalendarEventData<T>> _eventsMap = {};
+
   /// Returns list of [CalendarEventData<T>] stored in this controller.
   List<CalendarEventData<T>> get events => _eventList.toList(growable: false);
 
@@ -185,13 +187,18 @@ class EventController<T> extends ChangeNotifier {
 
   bool isEventInRange(
       CalendarEventData<T> calendarEventData, DateTime selectedDate) {
+    print("Selected date : ${selectedDate.toIso8601String()}");
     final start = calendarEventData.date;
     final end = calendarEventData.endDate;
+    print("Event start date : ${start.toIso8601String()}");
+    print("Event end date : ${end.toIso8601String()}");
     if (start.isAtSameMomentAs(selectedDate) ||
         end.isAtSameMomentAs(selectedDate)) {
+      print("Is at same moment so we don't remove");
       return true;
     }
     if (start.isBefore(selectedDate) && (end.isAfter(selectedDate))) {
+      print("Start is before selected AND end is after selected so we don't remove");
       return true;
     }
     return false;
