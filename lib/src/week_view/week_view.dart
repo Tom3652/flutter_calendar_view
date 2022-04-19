@@ -438,8 +438,9 @@ class WeekViewState<T> extends State<WeekView<T>> {
       DateTime endDuration) {
     if (events.isNotEmpty) {
       double padding = 7;
-      int sum = startDuration.minute + endDuration.minute;
+      int sum = endDuration.minute - startDuration.minute;
       bool smallDuration = startDuration.hour == endDuration.hour && (sum <= 30);
+      print("is a small duration $smallDuration");
       if(smallDuration) {
         padding = 2;
       }
