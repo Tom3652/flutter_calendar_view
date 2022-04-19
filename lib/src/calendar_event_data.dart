@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'extensions.dart';
 
 /// Stores all the events on [date]
-@immutable
 class CalendarEventData<T> {
   /// Specifies date on which all these events are.
   final DateTime date;
@@ -41,8 +40,10 @@ class CalendarEventData<T> {
 
   final bool allDay;
 
+  int createdAt = DateTime.now().millisecondsSinceEpoch;
+
   /// Stores all the events on [date]
-  const CalendarEventData({
+  CalendarEventData({
     required this.title,
     this.description = "",
     this.event,
@@ -75,7 +76,7 @@ class CalendarEventData<T> {
       allDay: json["allDay"] ?? false,
       color: Color(json["color"]),
       description: json["description"],
-    );
+    )..createdAt = json["createdAt"];
   }
 
   Map<String, dynamic> toJson() => {
@@ -86,6 +87,7 @@ class CalendarEventData<T> {
         "title": title,
         "allDay": allDay,
         "uid": uid,
+        "createdAt": createdAt,
         "color": color.value,
         "description": description,
         "endDate": endDate.millisecondsSinceEpoch,
@@ -102,6 +104,7 @@ class CalendarEventData<T> {
         event == other.event &&
         title == other.title &&
         uid == other.uid &&
+        createdAt == other.createdAt &&
         description == other.description;
   }
 
