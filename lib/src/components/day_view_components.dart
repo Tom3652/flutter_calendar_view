@@ -74,7 +74,7 @@ class RoundedEventTile extends StatelessWidget {
                 title,
                 maxLines: 1,
                 maxFontSize: 20,
-                minFontSize: 6,
+                minFontSize: 8,
                 style: titleStyle ??
                     TextStyle(
                       fontSize: 20,
