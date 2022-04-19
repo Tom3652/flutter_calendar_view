@@ -192,8 +192,11 @@ class EventController<T> extends ChangeNotifier {
     final end = calendarEventData.endDate;
     print("Event start date : ${start.toIso8601String()}");
     print("Event end date : ${end.toIso8601String()}");
-    if (selectedDate.difference(start).inMilliseconds >= 0 &&
-        (end.difference(selectedDate).inMilliseconds >= 0)) {
+    final differenceStart = selectedDate.difference(start).inMilliseconds;
+    final differenceEnd = end.difference(selectedDate).inMilliseconds;
+    print("Difference start : $differenceStart");
+    print("Difference end : $differenceEnd");
+    if (differenceStart >= 0 && differenceEnd >= 0) {
       print(
           "Start is before selected AND end is after selected so we don't remove");
       return true;
