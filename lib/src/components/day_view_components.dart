@@ -78,7 +78,7 @@ class RoundedEventTile extends StatelessWidget {
                 style: titleStyle ??
                     TextStyle(
                       fontSize: 20,
-                      color: backgroundColor.accent,
+                      color: Colors.white,
                     ),
                 softWrap: true,
                 overflow: TextOverflow.fade,

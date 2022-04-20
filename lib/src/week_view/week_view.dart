@@ -449,7 +449,7 @@ class WeekViewState<T> extends State<WeekView<T>> {
         title: events[0].title,
         titleStyle: TextStyle(
           fontSize: 12,
-          color: events[0].color.accent,
+          color: Colors.white,
         ),
         totalEvents: events.length,
         padding: EdgeInsets.all(padding),
