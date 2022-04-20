@@ -215,7 +215,7 @@ class InternalWeekViewPage<T> extends StatelessWidget {
                                             child: Center(
                                                 child: Text(
                                               events[indexItem].title,
-                                              style: TextStyle(fontSize: 10),
+                                              style: TextStyle(fontSize: 10,color: Colors.white),
                                             )),
                                           ),
                                         );
