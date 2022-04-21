@@ -65,6 +65,12 @@ class EventController<T> extends ChangeNotifier {
     return "Entire day";
   }
 
+  void removeAllEvents() {
+    _rangingEventList.clear();
+    _events.clear();
+    notifyListeners();
+  }
+
   /// Removes [event] from this controller.
   void remove(CalendarEventData<T> event) {
     for (final e in _events) {
