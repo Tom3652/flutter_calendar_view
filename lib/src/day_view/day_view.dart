@@ -313,9 +313,9 @@ class DayViewState<T> extends State<DayView<T>> {
                       physics: BouncingScrollPhysics(),
                       onPageChanged: _onPageChange,
                       itemBuilder: (_, index) {
-                        print("total days : $_totalDays");
+                        //print("total days : $_totalDays");
                         final date = DateTime(_minDate.year, _minDate.month, _minDate.day + (index));
-                        print("date day in page view : ${date.day} + index ----- ${index}");
+                        //print("date day in page view : ${date.day} + index ----- ${index}");
                         return InternalDayViewPage<T>(
                           key: ValueKey(_hourHeight.toString() + date.toString()),
                           width: _width,
@@ -379,13 +379,20 @@ class DayViewState<T> extends State<DayView<T>> {
     DateTime startDuration,
     DateTime endDuration,
   ) {
+    double padding = 10;
+    int sum = endDuration.minute - startDuration.minute;
+    bool smallDuration = startDuration.hour == endDuration.hour && (sum <= 30);
+    print("is a small duration $smallDuration");
+    if(smallDuration) {
+      padding = 2;
+    }
     if (events.isNotEmpty)
       return RoundedEventTile(
         borderRadius: BorderRadius.circular(10.0),
         title: events[0].title,
         totalEvents: events.length - 1,
         description: events[0].description,
-        padding: EdgeInsets.all(10.0),
+        padding: EdgeInsets.all(padding),
         backgroundColor: events[0].color,
         margin: EdgeInsets.all(2.0),
       );

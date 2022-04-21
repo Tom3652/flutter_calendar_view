@@ -2,6 +2,7 @@
 // Use of this source code is governed by a MIT-style license
 // that can be found in the LICENSE file.
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -163,12 +164,14 @@ class FilledCell<T> extends StatelessWidget {
                           child: Row(
                             children: [
                               Expanded(
-                                child: Text(
+                                child: AutoSizeText(
                                   events[index].title,
                                   overflow: TextOverflow.clip,
                                   maxLines: 1,
+                                  maxFontSize: 12,
+                                  minFontSize: 8,
                                   style: TextStyle(
-                                    color: events[index].color.accent,
+                                    color: Colors.white,
                                     fontSize: 12,
                                   ),
                                 ),

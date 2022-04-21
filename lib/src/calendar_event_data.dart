@@ -38,7 +38,12 @@ class CalendarEventData<T> {
 
   final String uid;
 
+  /// Define if the event is for the entire day or not
   final bool allDay;
+
+  /// To know if we should send notifcation push for reminder 24h before the event
+  /// or not
+  final bool reminder;
 
   int createdAt = DateTime.now().millisecondsSinceEpoch;
 
@@ -51,6 +56,7 @@ class CalendarEventData<T> {
     this.startTime,
     this.endTime,
     this.allDay=false,
+    this.reminder=true,
     DateTime? endDate,
     required this.date,
     required this.uid,
@@ -74,6 +80,7 @@ class CalendarEventData<T> {
           : null,
       //event: json["event"],
       allDay: json["allDay"] ?? false,
+      reminder: json["reminder"] ?? true,
       color: Color(json["color"]),
       description: json["description"],
     )..createdAt = json["createdAt"];
@@ -86,6 +93,7 @@ class CalendarEventData<T> {
         //"event": event,
         "title": title,
         "allDay": allDay,
+        "reminder": reminder,
         "uid": uid,
         "createdAt": createdAt,
         "color": color.value,
@@ -104,6 +112,8 @@ class CalendarEventData<T> {
         event == other.event &&
         title == other.title &&
         uid == other.uid &&
+        //allDay == other.allDay &&
+        //reminder == other.reminder &&
         createdAt == other.createdAt &&
         description == other.description;
   }

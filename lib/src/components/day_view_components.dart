@@ -2,6 +2,7 @@
 // Use of this source code is governed by a MIT-style license
 // that can be found in the LICENSE file.
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -69,18 +70,21 @@ class RoundedEventTile extends StatelessWidget {
         children: [
           if (title.isNotEmpty)
             Expanded(
-              child: Text(
+              child: AutoSizeText(
                 title,
+                maxLines: 1,
+                maxFontSize: 20,
+                minFontSize: 8,
                 style: titleStyle ??
                     TextStyle(
                       fontSize: 20,
-                      color: backgroundColor.accent,
+                      color: Colors.white,
                     ),
                 softWrap: true,
                 overflow: TextOverflow.fade,
               ),
             ),
-          if (description.isNotEmpty)
+          /*if (description.isNotEmpty)
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 15.0),
@@ -93,7 +97,7 @@ class RoundedEventTile extends StatelessWidget {
                       ),
                 ),
               ),
-            ),
+            ),*/
           if (totalEvents > 1)
             Expanded(
               child: Text(

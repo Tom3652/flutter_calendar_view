@@ -436,20 +436,29 @@ class WeekViewState<T> extends State<WeekView<T>> {
       Rect boundary,
       DateTime startDuration,
       DateTime endDuration) {
-    if (events.isNotEmpty)
+    if (events.isNotEmpty) {
+      double padding = 7;
+      int sum = endDuration.minute - startDuration.minute;
+      bool smallDuration = startDuration.hour == endDuration.hour && (sum <= 30);
+      print("is a small duration $smallDuration");
+      if(smallDuration) {
+        padding = 2;
+      }
       return RoundedEventTile(
         borderRadius: BorderRadius.circular(6.0),
         title: events[0].title,
         titleStyle: TextStyle(
           fontSize: 12,
-          color: events[0].color.accent,
+          color: Colors.white,
         ),
         totalEvents: events.length,
-        padding: EdgeInsets.all(7.0),
+        padding: EdgeInsets.all(padding),
         backgroundColor: events[0].color,
       );
-    else
+    }
+    else {
       return Container();
+    }
   }
 
   /// Default view header builder. This builder will be used if

@@ -118,7 +118,7 @@ class InternalWeekViewPage<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final filteredDates = _filteredDate();
-    print("filtered dates : $filteredDates");
+    //print("filtered dates : $filteredDates");
     var isEventAllDay = false;
     for (var date in filteredDates) {
       isEventAllDay = controller
@@ -185,7 +185,7 @@ class InternalWeekViewPage<T> extends StatelessWidget {
                                     .getEventsOnDay(filteredDates[index])
                                     .where((element) => element.allDay)
                                     .toList();
-                                print("events lenght : $events");
+                                //print("events lenght : $events");
                                 return Center(
                                   child: Container(
                                     width: weekTitleWidth,
@@ -215,7 +215,7 @@ class InternalWeekViewPage<T> extends StatelessWidget {
                                             child: Center(
                                                 child: Text(
                                               events[indexItem].title,
-                                              style: TextStyle(fontSize: 10),
+                                              style: TextStyle(fontSize: 10,color: Colors.white),
                                             )),
                                           ),
                                         );
