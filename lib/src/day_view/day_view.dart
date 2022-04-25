@@ -234,8 +234,8 @@ class DayViewState<T> extends State<DayView<T>> {
     _eventTileBuilder = widget.eventTileBuilder ?? _defaultEventTileBuilder;
     _dayTitleBuilder = widget.dayTitleBuilder ?? _defaultDayBuilder;
 
-    print("initial day : $_initialDay");
-    print("min day : $_minDate");
+    //print("initial day : $_initialDay");
+    //print("min day : $_minDate");
   }
 
   @override
@@ -382,7 +382,7 @@ class DayViewState<T> extends State<DayView<T>> {
     double padding = 10;
     int sum = endDuration.minute - startDuration.minute;
     bool smallDuration = startDuration.hour == endDuration.hour && (sum <= 30);
-    print("is a small duration $smallDuration");
+    //print("is a small duration $smallDuration");
     if(smallDuration) {
       padding = 2;
     }

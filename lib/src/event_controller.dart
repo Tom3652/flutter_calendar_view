@@ -148,24 +148,24 @@ class EventController<T> extends ChangeNotifier {
       }
     }
 
-    print("ranging events : $_rangingEventList");
-    print("get event in controller for date : $date");
+    //print("ranging events : $_rangingEventList");
+    //print("get event in controller for date : $date");
 
     final daysFromRange = <DateTime>[];
     for (final rangingEvent in _rangingEventList) {
-      print("ranging event : $rangingEvent");
+      //print("ranging event : $rangingEvent");
       for (var i = 0;
           i <= rangingEvent.endDate.difference(rangingEvent.date).inDays;
           i++) {
         if (rangingEvent.title == "Test") {
-          print("ranging event date : ${rangingEvent.date}");
+          //print("ranging event date : ${rangingEvent.date}");
         }
         daysFromRange.add(rangingEvent.date.add(Duration(days: i)));
       }
-      print("days from range : $daysFromRange");
+      //print("days from range : $daysFromRange");
       if (rangingEvent.date.isBefore(rangingEvent.endDate)) {
         for (final eventDay in daysFromRange) {
-          print("event day : $eventDay");
+          //print("event day : $eventDay");
 
           //   print("event day : ${eventDay.day}");
           //  print("date day : ${date.day}");
@@ -177,14 +177,14 @@ class EventController<T> extends ChangeNotifier {
       }
     }
 
-    print("events :$events");
+    //print("events :$events");
     events.removeWhere((element) => !isEventInRange(element, date));
 
-    print("events after :$events");
+    //print("events after :$events");
 
     final uniqueEvents = <CalendarEventData<T>>{}..addAll(events);
 
-    print("unique events : $uniqueEvents");
+    //print("unique events : $uniqueEvents");
 
     return uniqueEvents.toList();
   }
@@ -197,21 +197,21 @@ class EventController<T> extends ChangeNotifier {
 
   bool isEventInRange(
       CalendarEventData<T> calendarEventData, DateTime selectedDate) {
-    print("Selected date : ${selectedDate.toIso8601String()}");
+    //print("Selected date : ${selectedDate.toIso8601String()}");
     final start = calendarEventData.date;
     final end = calendarEventData.endDate;
-    print("Event start date : ${start.toIso8601String()}");
-    print("Event end date : ${end.toIso8601String()}");
+    //print("Event start date : ${start.toIso8601String()}");
+    //print("Event end date : ${end.toIso8601String()}");
     if(isToday(start, selectedDate) || isToday(end, selectedDate)) {
-      print("is today return true : event in range");
+      //print("is today return true : event in range");
       return true;
     }
     final differenceStart = selectedDate.millisecondsSinceEpoch - start.millisecondsSinceEpoch; //selectedDate.difference(start).inMilliseconds;
     final differenceEnd = end.millisecondsSinceEpoch - selectedDate.millisecondsSinceEpoch;// end.difference(selectedDate).inMilliseconds;
-    print("Difference start : $differenceStart");
-    print("Difference end : $differenceEnd");
+    //print("Difference start : $differenceStart");
+    //print("Difference end : $differenceEnd");
     if (differenceStart >= 0 && (differenceEnd >= 0 || (differenceEnd < 0 && isToday(end, selectedDate)))) {
-      print("Start is before selected AND end is after selected so we don't remove");
+      //print("Start is before selected AND end is after selected so we don't remove");
       return true;
     }
     return false;
