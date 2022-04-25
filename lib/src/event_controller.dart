@@ -206,6 +206,7 @@ class EventController<T> extends ChangeNotifier {
       print("is today return true : event in range");
       return true;
     }
+    return false;
     final differenceStart = selectedDate.millisecondsSinceEpoch - start.millisecondsSinceEpoch; //selectedDate.difference(start).inMilliseconds;
     final differenceEnd = end.millisecondsSinceEpoch - selectedDate.millisecondsSinceEpoch;// end.difference(selectedDate).inMilliseconds;
     print("Difference start : $differenceStart");
