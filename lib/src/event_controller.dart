@@ -176,9 +176,7 @@ class EventController<T> extends ChangeNotifier {
           //   print("event day : ${eventDay.day}");
           //  print("date day : ${date.day}");
 
-          if (eventDay.year == date.year &&
-              eventDay.month == date.month &&
-              eventDay.day == date.day) {
+          if (isToday(eventDay, date)) {
             events.add(rangingEvent);
           }
         }
@@ -197,6 +195,12 @@ class EventController<T> extends ChangeNotifier {
     return uniqueEvents.toList();
   }
 
+  bool isToday(DateTime eventDay, DateTime date) {
+    return eventDay.year == date.year &&
+        eventDay.month == date.month &&
+        eventDay.day == date.day;
+  }
+
   bool isEventInRange(
       CalendarEventData<T> calendarEventData, DateTime selectedDate) {
     //print("Selected date : ${selectedDate.toIso8601String()}");
@@ -204,13 +208,15 @@ class EventController<T> extends ChangeNotifier {
     final end = calendarEventData.endDate;
     //print("Event start date : ${start.toIso8601String()}");
     //print("Event end date : ${end.toIso8601String()}");
-    final differenceStart = selectedDate.difference(start).inMilliseconds;
-    final differenceEnd = end.difference(selectedDate).inMilliseconds;
+    if(isToday(start, selectedDate) || isToday(end, selectedDate)) {
+      //print("is today return true : event in range");
+      return true;
+    }
+    final differenceStart = selectedDate.millisecondsSinceEpoch - start.millisecondsSinceEpoch; //selectedDate.difference(start).inMilliseconds;
+    final differenceEnd = end.millisecondsSinceEpoch - selectedDate.millisecondsSinceEpoch;// end.difference(selectedDate).inMilliseconds;
     //print("Difference start : $differenceStart");
     //print("Difference end : $differenceEnd");
-    if (differenceStart >= 0 &&
-        (differenceEnd >= 0 ||
-            (differenceEnd < 0 && end.day == selectedDate.day))) {
+    if (differenceStart >= 0 && (differenceEnd >= 0 || (differenceEnd < 0 && isToday(end, selectedDate)))) {
       //print("Start is before selected AND end is after selected so we don't remove");
       return true;
     }
