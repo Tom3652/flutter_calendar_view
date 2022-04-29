@@ -99,6 +99,7 @@ class EventController<T> extends ChangeNotifier {
     }
 
      */
+    notifyListeners();
   }
 
   void _addEvent(CalendarEventData<T> event) {
