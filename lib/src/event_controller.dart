@@ -215,7 +215,7 @@ class EventController<T> extends ChangeNotifier {
     if ((isInSameDay(start, selectedDate) || isInSameDay(end, selectedDate)) &&
         (calendarEventData.everyMonth ||
             calendarEventData.everyYear ||
-            calendarEventData.everyWeek) && end.isAfter(DateTime.now())) {
+            calendarEventData.everyWeek)) {
       return true;
     }
     //print("Event start date : ${start.toIso8601String()}");
