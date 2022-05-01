@@ -157,12 +157,12 @@ class EventController<T> extends ChangeNotifier {
       }
     }
 
-    //print("ranging events : $_rangingEventList");
+    print("ranging events : $_rangingEventList");
     //print("get event in controller for date : $date");
 
     final daysFromRange = <DateTime>[];
     for (final rangingEvent in _rangingEventList) {
-      //print("ranging event : $rangingEvent");
+      print("ranging event : $rangingEvent");
       for (var i = 0;
           i <= rangingEvent.endDate.difference(rangingEvent.date).inDays;
           i++) {
@@ -219,15 +219,12 @@ class EventController<T> extends ChangeNotifier {
     final start = calendarEventData.date;
     final end = calendarEventData.endDate;
 
-    /*
     if ((isInSameDay(start, selectedDate) || isInSameDay(end, selectedDate)) &&
         (calendarEventData.everyMonth ||
             calendarEventData.everyYear ||
             calendarEventData.everyWeek)) {
       return true;
     }
-
-     */
     //print("Event start date : ${start.toIso8601String()}");
     //print("Event end date : ${end.toIso8601String()}");
     if (isToday(start, selectedDate) || isToday(end, selectedDate)) {
