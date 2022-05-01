@@ -103,14 +103,10 @@ class EventController<T> extends ChangeNotifier {
   }
 
   void _addEvent(CalendarEventData<T> event) {
-    assert(event.endDate
-        .difference(event.date)
-        .inDays >= 0,
-    'The end date must be greater or equal to the start date');
+    assert(event.endDate.difference(event.date).inDays >= 0,
+        'The end date must be greater or equal to the start date');
 
-    if (event.endDate
-        .difference(event.date)
-        .inDays > 0) {
+    if (event.endDate.difference(event.date).inDays > 0) {
       _rangingEventList.add(event);
       _eventList.add(event);
     } else {
@@ -168,13 +164,8 @@ class EventController<T> extends ChangeNotifier {
     for (final rangingEvent in _rangingEventList) {
       print("ranging event : $rangingEvent");
       for (var i = 0;
-      i <= rangingEvent.endDate
-          .difference(rangingEvent.date)
-          .inDays;
-      i++) {
-        if (rangingEvent.title == "Test") {
-          //print("ranging event date : ${rangingEvent.date}");
-        }
+          i <= rangingEvent.endDate.difference(rangingEvent.date).inDays;
+          i++) {
         daysFromRange.add(rangingEvent.date.add(Duration(days: i)));
       }
       //print("days from range : $daysFromRange");
@@ -187,10 +178,7 @@ class EventController<T> extends ChangeNotifier {
 
           if (isToday(eventDay, date)) {
             events.add(rangingEvent);
-          } else if (isInDayRangeForRecursive(rangingEvent, date) &&
-              (rangingEvent.everyMonth ||
-                  rangingEvent.everyYear ||
-                  rangingEvent.everyWeek)) {
+          } else if (isInDayRangeForRecursive(rangingEvent, date)) {
             print("Is recursive event");
             events.add(rangingEvent);
           }
@@ -217,17 +205,33 @@ class EventController<T> extends ChangeNotifier {
   }
 
   bool isInDayRangeForRecursive(CalendarEventData eventData, DateTime date) {
-    return date.day >= eventData.date.day && date.day <= eventData.endDate.day;
+    final inMonth = date.day >= eventData.date.day &&
+        date.day <= eventData.endDate.day &&
+        date.month >= eventData.date.month;
+    if (inMonth && eventData.everyMonth) {
+      return true;
+    }
+    final inYear = inMonth && date.year >= eventData.date.year;
+    if (inYear && eventData.everyYear) {
+      return true;
+    }
+    final inWeek = date.day >= eventData.date.weekday &&
+        date.weekday <= eventData.endDate.weekday &&
+        date.day >= eventData.date.day;
+    if (inWeek && eventData.everyWeek) {
+      return true;
+    }
+    return false;
   }
 
-  bool isEventInRange(CalendarEventData<T> calendarEventData,
-      DateTime selectedDate) {
+  bool isEventInRange(
+      CalendarEventData<T> calendarEventData, DateTime selectedDate) {
     //print("Selected date : ${selectedDate.toIso8601String()}");
     final start = calendarEventData.date;
     final end = calendarEventData.endDate;
 
     if ((isInDayRangeForRecursive(calendarEventData, selectedDate) ||
-        isInDayRangeForRecursive(calendarEventData, selectedDate)) &&
+            isInDayRangeForRecursive(calendarEventData, selectedDate)) &&
         (calendarEventData.everyMonth ||
             calendarEventData.everyYear ||
             calendarEventData.everyWeek)) {
@@ -255,7 +259,6 @@ class EventController<T> extends ChangeNotifier {
     }
     return false;
   }
-
 }
 
 class _YearEvent<T> {
@@ -279,8 +282,7 @@ class _YearEvent<T> {
         return _months[i].addEvent(event);
       }
     }
-    final newEvent = _MonthEvent<T>(month: event.date.month)
-      ..addEvent(event);
+    final newEvent = _MonthEvent<T>(month: event.date.month)..addEvent(event);
     _months.add(newEvent);
     return true;
   }

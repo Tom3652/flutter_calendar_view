@@ -43,7 +43,7 @@ class CalendarEventData<T> {
 
   /// To know if we should send notification push for reminder 24h before the event
   /// or not
-  final bool reminder;
+  final int reminder;
 
   final bool everyWeek;
 
@@ -62,7 +62,7 @@ class CalendarEventData<T> {
     this.startTime,
     this.endTime,
     this.allDay=false,
-    this.reminder=true,
+    this.reminder=0,
     DateTime? endDate,
     required this.date,
     required this.uid,
