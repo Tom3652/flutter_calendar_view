@@ -205,9 +205,8 @@ class EventController<T> extends ChangeNotifier {
   }
 
   bool isInDayRangeForRecursive(CalendarEventData eventData, DateTime date) {
-    final inMonth = date.day >= eventData.date.day &&
-        date.day <= eventData.endDate.day &&
-        date.month >= eventData.date.month;
+    final inMonth =
+        date.day >= eventData.date.day && date.day <= eventData.endDate.day;
     if (inMonth && eventData.everyMonth) {
       return true;
     }
@@ -220,8 +219,7 @@ class EventController<T> extends ChangeNotifier {
       return true;
     }
     final inWeek = date.weekday >= eventData.date.weekday &&
-        date.weekday <= eventData.endDate.weekday &&
-        date.month >= eventData.date.month;
+        date.weekday <= eventData.endDate.weekday;
     if (inWeek && eventData.everyWeek) {
       return true;
     }
