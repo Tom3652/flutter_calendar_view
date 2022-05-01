@@ -141,7 +141,9 @@ class EventController<T> extends ChangeNotifier {
     for (var i = 0; i < _events.length; i++) {
       if (_events[i].year == date.year) {
         final monthEvents = _events[i]._months;
-
+        events.addAll(_events[i]
+            .getAllEvents()
+            .where((ele) => ele.everyYear || ele.everyMonth || ele.everyWeek));
         for (var j = 0; j < monthEvents.length; j++) {
           if (monthEvents[j].month == date.month) {
             final calendarEvents = monthEvents[j]._events;
@@ -172,15 +174,14 @@ class EventController<T> extends ChangeNotifier {
       //print("days from range : $daysFromRange");
       if (rangingEvent.date.isBefore(rangingEvent.endDate)) {
         for (final eventDay in daysFromRange) {
-          //print("event day : $eventDay");
+          print("event day : $eventDay");
 
           //   print("event day : ${eventDay.day}");
           //  print("date day : ${date.day}");
 
           if (isToday(eventDay, date)) {
             events.add(rangingEvent);
-          }
-          else if (isInSameDay(eventDay, date) &&
+          } else if (isInSameDay(eventDay, date) &&
               (rangingEvent.everyMonth ||
                   rangingEvent.everyYear ||
                   rangingEvent.everyWeek)) {
