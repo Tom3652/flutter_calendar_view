@@ -69,6 +69,8 @@ class InternalDayViewPage<T> extends StatelessWidget {
   /// Called when user long press on calendar.
   final DatePressCallback? onDateLongPress;
 
+  final Color allDayTextColor;
+
   /// Defines a single day page.
   const InternalDayViewPage({
     Key? key,
@@ -90,13 +92,14 @@ class InternalDayViewPage<T> extends StatelessWidget {
     required this.verticalLineOffset,
     required this.onTileTap,
     required this.onDateLongPress,
+    required this.allDayTextColor,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<CalendarEventData<T>> list = controller.getEventsOnDay(date);
+    final list = controller.getEventsOnDay(date);
     //print("list 1 : $list");
-    final List<CalendarEventData<T>> eventsAllDay = list.where((element) => element.allDay).toList();
+    final eventsAllDay = list.where((element) => element.allDay).toList();
     final isEventAllDay = eventsAllDay.isNotEmpty;
     //print("is Event all day for DayView : $isEventAllDay");
     //print("all days event : ${eventsAllDay}");
@@ -112,7 +115,10 @@ class InternalDayViewPage<T> extends StatelessWidget {
               child: Container(
                 margin: EdgeInsets.only(bottom: 10, top: 10, left: 10),
                 child: Text(controller.getLocalizedDayForEvent(),
-                    style: Theme.of(context).textTheme.bodyText1),
+                    style: TextStyle(
+                      fontSize: Theme.of(context).textTheme.bodyText1!.fontSize,
+                      color: allDayTextColor
+                    )),
               ),
             ),
           if (isEventAllDay)
