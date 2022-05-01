@@ -65,6 +65,7 @@ class EventController<T> extends ChangeNotifier {
     return "Entire day";
   }
 
+  /// Removes all events
   void removeAllEvents() {
     _rangingEventList.clear();
     _events.clear();
@@ -73,6 +74,9 @@ class EventController<T> extends ChangeNotifier {
 
   /// Removes [event] from this controller.
   void remove(CalendarEventData<T> event) {
+    _eventList.removeWhere((element) => element.uid == event.uid);
+    _rangingEventList.removeWhere((element) => element.uid == event.uid);
+    /*
     for (final e in _events) {
       if (e.year == event.date.year) {
         if (e.removeEvent(event) && _eventList.remove(event)) {
@@ -93,6 +97,9 @@ class EventController<T> extends ChangeNotifier {
         break;
       }
     }
+
+     */
+    notifyListeners();
   }
 
   void _addEvent(CalendarEventData<T> event) {
