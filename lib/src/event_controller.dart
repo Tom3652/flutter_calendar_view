@@ -161,12 +161,12 @@ class EventController<T> extends ChangeNotifier {
       }
     }
 
-    print("ranging events : $_rangingEventList");
+    //print("ranging events : $_rangingEventList");
     //print("get event in controller for date : $date");
 
     final daysFromRange = <DateTime>[];
     for (final rangingEvent in _rangingEventList) {
-      print("ranging event : $rangingEvent");
+      //print("ranging event : $rangingEvent");
       for (var i = 0;
           i <= rangingEvent.endDate.difference(rangingEvent.date).inDays;
           i++) {
@@ -175,7 +175,7 @@ class EventController<T> extends ChangeNotifier {
       //print("days from range : $daysFromRange");
       if (rangingEvent.date.isBefore(rangingEvent.endDate)) {
         for (final eventDay in daysFromRange) {
-          print("event day : $eventDay");
+          //print("event day : $eventDay");
 
           //   print("event day : ${eventDay.day}");
           //  print("date day : ${date.day}");
@@ -183,7 +183,7 @@ class EventController<T> extends ChangeNotifier {
           if (isToday(eventDay, date)) {
             events.add(rangingEvent);
           } else if (isInDayRangeForRecursive(rangingEvent, date)) {
-            print("Is recursive event");
+            //print("Is recursive event");
             events.add(rangingEvent);
           }
         }
