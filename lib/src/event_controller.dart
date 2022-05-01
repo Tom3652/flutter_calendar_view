@@ -75,6 +75,8 @@ class EventController<T> extends ChangeNotifier {
   /// Removes [event] from this controller.
   void remove(CalendarEventData<T> event) {
     _eventList.removeWhere((element) => element.uid == event.uid);
+    _events.removeWhere((element) =>
+        element.getAllEvents().where((ele) => ele.uid == event.uid).isNotEmpty);
     _rangingEventList.removeWhere((element) => element.uid == event.uid);
     /*
     for (final e in _events) {
@@ -139,11 +141,12 @@ class EventController<T> extends ChangeNotifier {
     final events = <CalendarEventData<T>>[];
 
     for (var i = 0; i < _events.length; i++) {
+      events.addAll(_events[i]
+          .getAllEvents()
+          .where((ele) => ele.everyYear || ele.everyMonth || ele.everyWeek));
       if (_events[i].year == date.year) {
         final monthEvents = _events[i]._months;
-        events.addAll(_events[i]
-            .getAllEvents()
-            .where((ele) => ele.everyYear || ele.everyMonth || ele.everyWeek));
+
         for (var j = 0; j < monthEvents.length; j++) {
           if (monthEvents[j].month == date.month) {
             final calendarEvents = monthEvents[j]._events;
