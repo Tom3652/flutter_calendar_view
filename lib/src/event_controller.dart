@@ -76,7 +76,7 @@ class EventController<T> extends ChangeNotifier {
   void remove(CalendarEventData<T> event) {
     _eventList.removeWhere((element) => element.uid == event.uid);
     _events.forEach((element) {
-      element.getAllEvents().removeWhere((ele) => ele.uid == event.uid);
+      element.removeEvent(event);
     });
     _rangingEventList.removeWhere((element) => element.uid == event.uid);
     /*
