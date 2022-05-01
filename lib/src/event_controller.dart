@@ -180,6 +180,12 @@ class EventController<T> extends ChangeNotifier {
           if (isToday(eventDay, date)) {
             events.add(rangingEvent);
           }
+          else if (isInSameDay(eventDay, date) &&
+              (rangingEvent.everyMonth ||
+                  rangingEvent.everyYear ||
+                  rangingEvent.everyWeek)) {
+            events.add(rangingEvent);
+          }
         }
       }
     }
@@ -212,12 +218,15 @@ class EventController<T> extends ChangeNotifier {
     final start = calendarEventData.date;
     final end = calendarEventData.endDate;
 
+    /*
     if ((isInSameDay(start, selectedDate) || isInSameDay(end, selectedDate)) &&
         (calendarEventData.everyMonth ||
             calendarEventData.everyYear ||
             calendarEventData.everyWeek)) {
       return true;
     }
+
+     */
     //print("Event start date : ${start.toIso8601String()}");
     //print("Event end date : ${end.toIso8601String()}");
     if (isToday(start, selectedDate) || isToday(end, selectedDate)) {
