@@ -211,13 +211,15 @@ class EventController<T> extends ChangeNotifier {
     if (inMonth && eventData.everyMonth) {
       return true;
     }
-    final inYear = inMonth && date.year >= eventData.date.year;
+    final inYear = (date.month == eventData.date.month ||
+            date.month == eventData.endDate.month) &&
+        date.year >= eventData.date.year;
     if (inYear && eventData.everyYear) {
       return true;
     }
-    final inWeek = date.day >= eventData.date.weekday &&
+    final inWeek = date.weekday >= eventData.date.weekday &&
         date.weekday <= eventData.endDate.weekday &&
-        date.day >= eventData.date.day;
+        date.month >= eventData.date.month;
     if (inWeek && eventData.everyWeek) {
       return true;
     }
