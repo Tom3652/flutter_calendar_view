@@ -185,6 +185,7 @@ class EventController<T> extends ChangeNotifier {
               (rangingEvent.everyMonth ||
                   rangingEvent.everyYear ||
                   rangingEvent.everyWeek)) {
+            print("Is recursive event");
             events.add(rangingEvent);
           }
         }
