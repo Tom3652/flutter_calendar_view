@@ -87,6 +87,8 @@ class InternalWeekViewPage<T> extends StatelessWidget {
   /// Called when user long press on calendar.
   final DatePressCallback? onDateLongPress;
 
+  final Color allDayTextColor;
+
   /// A single page for week view.
   const InternalWeekViewPage({
     Key? key,
@@ -113,6 +115,7 @@ class InternalWeekViewPage<T> extends StatelessWidget {
     required this.onTileTap,
     required this.onDateLongPress,
     required this.weekDays,
+    required this.allDayTextColor,
   }) : super(key: key);
 
   @override
@@ -170,6 +173,7 @@ class InternalWeekViewPage<T> extends StatelessWidget {
                             controller.getLocalizedDayForEvent(),
                             style: TextStyle(
                               fontSize: 12,
+                              color: allDayTextColor
                             ),
                             textAlign: TextAlign.center,
                           ),

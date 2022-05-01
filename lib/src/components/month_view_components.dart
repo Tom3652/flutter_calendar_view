@@ -130,9 +130,7 @@ class FilledCell<T> extends StatelessWidget {
               style: TextStyle(
                 color: shouldHighlight
                     ? highlightedTitleColor
-                    : isInMonth
-                        ? titleColor
-                        : titleColor.withOpacity(0.4),
+                    : titleColor,
                 fontSize: 12,
               ),
             ),
