@@ -128,7 +128,7 @@ class WeekView<T> extends StatefulWidget {
   /// This method will be called when user long press on calendar.
   final DatePressCallback? onDateLongPress;
 
-  final Color? allDayTextColor;
+  final Color allDayTextColor;
 
   /// Main widget for week view.
   const WeekView({
@@ -158,7 +158,8 @@ class WeekView<T> extends StatefulWidget {
     this.onEventTap,
     this.onDateLongPress,
     this.weekDays = WeekDays.values,
-    this.showWeekends = true, this.allDayTextColor,
+    this.showWeekends = true,
+    required this.allDayTextColor,
   }) : super(key: key);
 
   @override
@@ -357,7 +358,7 @@ class WeekViewState<T> extends State<WeekView<T>> {
                         heightPerMinute: widget.heightPerMinute,
                         hourIndicatorSettings: _hourIndicatorSettings,
                         dates: dates,
-                        allDayTextColor: widget.allDayTextColor ?? Theme.of(context).textTheme.bodyText1!.color,
+                        allDayTextColor: widget.allDayTextColor,
                         showLiveLine: widget.showLiveTimeLineInAllDays ||
                             _showLiveTimeIndicator(dates),
                         timeLineOffset: _timeLineOffset,
