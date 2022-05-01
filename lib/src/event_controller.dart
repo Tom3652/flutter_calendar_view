@@ -213,7 +213,9 @@ class EventController<T> extends ChangeNotifier {
     }
     final inYear = (date.month == eventData.date.month ||
             date.month == eventData.endDate.month) &&
-        date.year >= eventData.date.year;
+        date.year >= eventData.date.year &&
+        date.day >= eventData.date.day &&
+        date.day <= eventData.endDate.day;
     if (inYear && eventData.everyYear) {
       return true;
     }
