@@ -41,9 +41,15 @@ class CalendarEventData<T> {
   /// Define if the event is for the entire day or not
   final bool allDay;
 
-  /// To know if we should send notifcation push for reminder 24h before the event
+  /// To know if we should send notification push for reminder 24h before the event
   /// or not
   final bool reminder;
+
+  final bool everyWeek;
+
+  final bool everyMonth;
+
+  final bool everyYear;
 
   int createdAt = DateTime.now().millisecondsSinceEpoch;
 
@@ -60,6 +66,7 @@ class CalendarEventData<T> {
     DateTime? endDate,
     required this.date,
     required this.uid,
+    required this.everyWeek, required this.everyMonth, required this.everyYear
   }) : _endDate = endDate;
 
   DateTime get endDate => _endDate ?? date;
@@ -78,6 +85,9 @@ class CalendarEventData<T> {
       endTime: json["endTime"] != null
           ? DateTime.fromMillisecondsSinceEpoch(json["endTime"])
           : null,
+      everyMonth: json["everyMonth"] ?? false,
+      everyWeek: json["everyWeek"] ?? false,
+      everyYear: json["everyYear"] ?? false,
       //event: json["event"],
       allDay: json["allDay"] ?? false,
       reminder: json["reminder"] ?? true,

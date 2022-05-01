@@ -202,22 +202,39 @@ class EventController<T> extends ChangeNotifier {
         eventDay.day == date.day;
   }
 
+  bool isInSameDay(DateTime eventDay, DateTime date) {
+    return eventDay.day == date.day;
+  }
+
   bool isEventInRange(
       CalendarEventData<T> calendarEventData, DateTime selectedDate) {
     //print("Selected date : ${selectedDate.toIso8601String()}");
     final start = calendarEventData.date;
     final end = calendarEventData.endDate;
+
+    if ((isInSameDay(start, selectedDate) || isInSameDay(end, selectedDate)) &&
+        (calendarEventData.everyMonth ||
+            calendarEventData.everyYear ||
+            calendarEventData.everyWeek) && end.isAfter(DateTime.now())) {
+      return true;
+    }
     //print("Event start date : ${start.toIso8601String()}");
     //print("Event end date : ${end.toIso8601String()}");
-    if(isToday(start, selectedDate) || isToday(end, selectedDate)) {
+    if (isToday(start, selectedDate) || isToday(end, selectedDate)) {
       //print("is today return true : event in range");
       return true;
     }
-    final differenceStart = selectedDate.millisecondsSinceEpoch - start.millisecondsSinceEpoch; //selectedDate.difference(start).inMilliseconds;
-    final differenceEnd = end.millisecondsSinceEpoch - selectedDate.millisecondsSinceEpoch;// end.difference(selectedDate).inMilliseconds;
+    final differenceStart = selectedDate.millisecondsSinceEpoch -
+        start
+            .millisecondsSinceEpoch; //selectedDate.difference(start).inMilliseconds;
+    final differenceEnd = end.millisecondsSinceEpoch -
+        selectedDate
+            .millisecondsSinceEpoch; // end.difference(selectedDate).inMilliseconds;
     //print("Difference start : $differenceStart");
     //print("Difference end : $differenceEnd");
-    if (differenceStart >= 0 && (differenceEnd >= 0 || (differenceEnd < 0 && isToday(end, selectedDate)))) {
+    if (differenceStart >= 0 &&
+        (differenceEnd >= 0 ||
+            (differenceEnd < 0 && isToday(end, selectedDate)))) {
       //print("Start is before selected AND end is after selected so we don't remove");
       return true;
     }
