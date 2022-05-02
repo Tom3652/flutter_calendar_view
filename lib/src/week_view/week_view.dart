@@ -130,6 +130,9 @@ class WeekView<T> extends StatefulWidget {
 
   final Color allDayTextColor;
 
+  final double bottomPadding;
+
+
   /// Main widget for week view.
   const WeekView({
     Key? key,
@@ -149,6 +152,7 @@ class WeekView<T> extends StatefulWidget {
     this.timeLineWidth,
     this.liveTimeIndicatorSettings,
     this.onPageChange,
+    this.bottomPadding = 0,
     this.weekPageHeaderBuilder,
     this.eventArranger,
     this.weekTitleHeight = 50,
@@ -361,6 +365,7 @@ class WeekViewState<T> extends State<WeekView<T>> {
                         allDayTextColor: widget.allDayTextColor,
                         showLiveLine: widget.showLiveTimeLineInAllDays ||
                             _showLiveTimeIndicator(dates),
+                        bottomPadding: widget.bottomPadding,
                         timeLineOffset: _timeLineOffset,
                         timeLineWidth: _timeLineWidth,
                         verticalLineOffset: 0,

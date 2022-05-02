@@ -71,6 +71,8 @@ class InternalDayViewPage<T> extends StatelessWidget {
 
   final Color allDayTextColor;
 
+  final double bottomPadding;
+
   /// Defines a single day page.
   const InternalDayViewPage({
     Key? key,
@@ -93,6 +95,7 @@ class InternalDayViewPage<T> extends StatelessWidget {
     required this.onTileTap,
     required this.onDateLongPress,
     required this.allDayTextColor,
+    required this.bottomPadding,
   }) : super(key: key);
 
   @override
@@ -104,123 +107,120 @@ class InternalDayViewPage<T> extends StatelessWidget {
     //print("is Event all day for DayView : $isEventAllDay");
     //print("all days event : ${eventsAllDay}");
     //print("----------------------------------");
-    return Container(
-      height: height,
-      width: width,
-      child: CustomScrollView(
-        physics: NeverScrollableScrollPhysics(),
-        slivers: [
-          if (isEventAllDay)
-            SliverToBoxAdapter(
-              child: Container(
-                margin: EdgeInsets.only(bottom: 10, top: 10, left: 10),
-                child: Text(controller.getLocalizedDayForEvent(),
-                    style: TextStyle(
-                      fontSize: Theme.of(context).textTheme.bodyText1!.fontSize,
-                      color: allDayTextColor
-                    )),
-              ),
+    return CustomScrollView(
+      physics: BouncingScrollPhysics(),
+      slivers: [
+        if (isEventAllDay)
+          SliverToBoxAdapter(
+            child: Container(
+              margin: EdgeInsets.only(bottom: 10, top: 10, left: 10),
+              child: Text(controller.getLocalizedDayForEvent(),
+                  style: TextStyle(
+                    fontSize: Theme.of(context).textTheme.bodyText1!.fontSize,
+                    color: allDayTextColor
+                  )),
             ),
-          if (isEventAllDay)
-            SliverPadding(
-              padding: EdgeInsets.only(left: 10, right: 10),
-              sliver: SliverGrid(
-                delegate: SliverChildBuilderDelegate(
-                  (ctx, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        if(onTileTap != null) {
-                          onTileTap!(controller
-                              .getEventsOnDay(date), eventsAllDay[index].date);
-                        }
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            color: eventsAllDay[index].color,
-                            borderRadius: BorderRadius.circular(8)),
-                        child: Center(
-                          child: Text(
-                            eventsAllDay[index].title,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(color: Colors.white, fontSize: 14),
-                          ),
+          ),
+        if (isEventAllDay)
+          SliverPadding(
+            padding: EdgeInsets.only(left: 10, right: 10),
+            sliver: SliverGrid(
+              delegate: SliverChildBuilderDelegate(
+                (ctx, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      if(onTileTap != null) {
+                        onTileTap!(controller
+                            .getEventsOnDay(date), eventsAllDay[index].date);
+                      }
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          color: eventsAllDay[index].color,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Center(
+                        child: Text(
+                          eventsAllDay[index].title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(color: Colors.white, fontSize: 14),
                         ),
                       ),
-                    );
-                  },
-                  childCount: eventsAllDay.length,
-                ),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    childAspectRatio: 2.2,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10),
+                    ),
+                  );
+                },
+                childCount: eventsAllDay.length,
               ),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  childAspectRatio: 2.2,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10),
             ),
-          SliverPadding(padding: EdgeInsets.all(5)),
-          SliverToBoxAdapter(
-            child: Stack(
-              children: [
-                CustomPaint(
-                  size: Size(width, height),
-                  painter: HourLinePainter(
-                    lineColor: hourIndicatorSettings.color,
-                    lineHeight: hourIndicatorSettings.height,
-                    offset: timeLineWidth + hourIndicatorSettings.offset,
-                    minuteHeight: heightPerMinute,
-                    verticalLineOffset: verticalLineOffset,
-                    showVerticalLine: showVerticalLine,
-                  ),
+          ),
+        SliverPadding(padding: EdgeInsets.all(5)),
+        SliverToBoxAdapter(
+          child: Stack(
+            children: [
+              CustomPaint(
+                size: Size(width, height),
+                painter: HourLinePainter(
+                  lineColor: hourIndicatorSettings.color,
+                  lineHeight: hourIndicatorSettings.height,
+                  offset: timeLineWidth + hourIndicatorSettings.offset,
+                  minuteHeight: heightPerMinute,
+                  verticalLineOffset: verticalLineOffset,
+                  showVerticalLine: showVerticalLine,
                 ),
-                if (showLiveLine && liveTimeIndicatorSettings.height > 0)
-                  LiveTimeIndicator(
-                    liveTimeIndicatorSettings: liveTimeIndicatorSettings,
-                    width: width,
-                    height: height,
-                    heightPerMinute: heightPerMinute,
-                    timeLineWidth: timeLineWidth,
-                  ),
-                PressDetector(
+              ),
+              if (showLiveLine && liveTimeIndicatorSettings.height > 0)
+                LiveTimeIndicator(
+                  liveTimeIndicatorSettings: liveTimeIndicatorSettings,
                   width: width,
                   height: height,
-                  hourHeight: hourHeight,
-                  date: date,
-                  onDateLongPress: onDateLongPress,
-                ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: EventGenerator<T>(
-                    height: height,
-                    date: date,
-                    onTileTap: onTileTap,
-                    eventArranger: eventArranger,
-                    events: controller
-                        .getEventsOnDay(date)
-                        .where((element) => !element.allDay)
-                        .toList(),
-                    heightPerMinute: heightPerMinute,
-                    eventTileBuilder: eventTileBuilder,
-                    width: width -
-                        timeLineWidth -
-                        hourIndicatorSettings.offset -
-                        verticalLineOffset,
-                  ),
-                ),
-                TimeLine(
-                  height: height,
-                  hourHeight: hourHeight,
-                  timeLineBuilder: timeLineBuilder,
-                  timeLineOffset: timeLineOffset,
+                  heightPerMinute: heightPerMinute,
                   timeLineWidth: timeLineWidth,
-                  key: ValueKey(heightPerMinute),
                 ),
-              ],
-            ),
-          )
-        ],
-      ),
+              PressDetector(
+                width: width,
+                height: height,
+                hourHeight: hourHeight,
+                date: date,
+                onDateLongPress: onDateLongPress,
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: EventGenerator<T>(
+                  height: height,
+                  date: date,
+                  onTileTap: onTileTap,
+                  eventArranger: eventArranger,
+                  events: controller
+                      .getEventsOnDay(date)
+                      .where((element) => !element.allDay)
+                      .toList(),
+                  heightPerMinute: heightPerMinute,
+                  eventTileBuilder: eventTileBuilder,
+                  width: width -
+                      timeLineWidth -
+                      hourIndicatorSettings.offset -
+                      verticalLineOffset,
+                ),
+              ),
+              TimeLine(
+                height: height,
+                hourHeight: hourHeight,
+                timeLineBuilder: timeLineBuilder,
+                timeLineOffset: timeLineOffset,
+                timeLineWidth: timeLineWidth,
+                key: ValueKey(heightPerMinute),
+              ),
+            ],
+          ),
+        ),
+        SliverPadding(padding: EdgeInsets.only(bottom: bottomPadding))
+      ],
     );
   }
 }
