@@ -211,30 +211,42 @@ class EventController<T> extends ChangeNotifier {
   bool isInDayRangeForRecursive(CalendarEventData eventData, DateTime date) {
     final firstDate = eventData.date;
     final lastDate = eventData.endDate;
-    final inMonth = date.day >= firstDate.day &&
-        date.day <= lastDate.day &&
-        date.isAfter(firstDate);
-    if (inMonth && eventData.everyMonth) {
-      return true;
+    final isAfter = date.isAfter(firstDate);
+    if (eventData.everyMonth) {
+      final inMonth =
+          date.day >= firstDate.day && date.day <= lastDate.day && isAfter;
+      if (inMonth) {
+        return true;
+      }
     }
-    final inYear =
-        (date.month == firstDate.month || date.month == lastDate.month) &&
-            date.year >= firstDate.year &&
-            date.day >= firstDate.day &&
-            date.day <= lastDate.day &&
-            date.isAfter(firstDate);
-    if (inYear && eventData.everyYear) {
-      return true;
+    if (eventData.everyYear) {
+      final inYear =
+          (date.month == firstDate.month || date.month == lastDate.month) &&
+              date.year >= firstDate.year &&
+              date.day >= firstDate.day &&
+              date.day <= lastDate.day &&
+              isAfter;
+      if (inYear) {
+        return true;
+      }
     }
-    final inWeek = ((date.weekday >= firstDate.weekday &&
-                date.weekday <= lastDate.weekday) ||
-            (date.day >= firstDate.day && date.day <= lastDate.day) ||
-            (date.day >= firstDate.day &&
-                date.day >= lastDate.day &&
-                firstDate.month < lastDate.month)) &&
-        date.isAfter(firstDate);
-    if (inWeek && eventData.everyWeek) {
-      return true;
+    if (eventData.everyWeek) {
+      final weekDayStart = firstDate.weekday;
+      final weekDayEnd = lastDate.weekday;
+      final days = <int>[];
+
+      var inWeek = ((date.weekday >= firstDate.weekday &&
+          date.weekday <= lastDate.weekday)) && isAfter;
+      if (weekDayEnd <= weekDayStart) {
+        for (var i = weekDayStart; i < 7 - weekDayStart + weekDayEnd; i++) {
+          days.add(i % 7);
+        }
+        inWeek = days.contains(date.weekday) && isAfter;
+      }
+
+      if (inWeek) {
+        return true;
+      }
     }
     return false;
   }
