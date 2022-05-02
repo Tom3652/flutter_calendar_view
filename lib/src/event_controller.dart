@@ -209,23 +209,30 @@ class EventController<T> extends ChangeNotifier {
   }
 
   bool isInDayRangeForRecursive(CalendarEventData eventData, DateTime date) {
-    final inMonth = date.day >= eventData.date.day &&
-        date.day <= eventData.endDate.day &&
-        date.year >= eventData.date.year && date.isAfter(eventData.date);
+    final firstDate = eventData.date;
+    final lastDate = eventData.endDate;
+    final inMonth = date.day >= firstDate.day &&
+        date.day <= lastDate.day &&
+        date.isAfter(firstDate);
     if (inMonth && eventData.everyMonth) {
       return true;
     }
-    final inYear = (date.month == eventData.date.month ||
-            date.month == eventData.endDate.month) &&
-        date.year >= eventData.date.year &&
-        date.day >= eventData.date.day &&
-        date.day <= eventData.endDate.day && date.isAfter(eventData.date);
+    final inYear =
+        (date.month == firstDate.month || date.month == lastDate.month) &&
+            date.year >= firstDate.year &&
+            date.day >= firstDate.day &&
+            date.day <= lastDate.day &&
+            date.isAfter(firstDate);
     if (inYear && eventData.everyYear) {
       return true;
     }
-    final inWeek = date.weekday >= eventData.date.weekday &&
-        date.weekday <= eventData.endDate.weekday &&
-        date.year >= eventData.date.year && date.isAfter(eventData.date);
+    final inWeek = ((date.weekday >= firstDate.weekday &&
+                date.weekday <= lastDate.weekday) ||
+            (date.day >= firstDate.day && date.day <= lastDate.day) ||
+            (date.day >= firstDate.day &&
+                date.day >= lastDate.day &&
+                firstDate.month < lastDate.month)) &&
+        date.isAfter(firstDate);
     if (inWeek && eventData.everyWeek) {
       return true;
     }
