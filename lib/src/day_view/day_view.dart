@@ -131,6 +131,8 @@ class DayView<T> extends StatefulWidget {
 
   final Color allDayTextColor;
 
+  final double bottomPadding;
+
   /// Main widget for day view.
   const DayView({
     Key? key,
@@ -157,7 +159,9 @@ class DayView<T> extends StatefulWidget {
     this.backgroundColor = Colors.white,
     this.scrollOffset = 0.0,
     this.onEventTap,
-    this.onDateLongPress, required this.allDayTextColor,
+    this.onDateLongPress,
+    required this.allDayTextColor,
+    this.bottomPadding = 0,
   })  : assert((timeLineOffset) >= 0,
             "timeLineOffset must be greater than or equal to 0"),
         super(key: key);
@@ -308,7 +312,7 @@ class DayViewState<T> extends State<DayView<T>> {
                   physics: BouncingScrollPhysics(),
                   controller: _scrollController,
                   child: SizedBox(
-                    //height: _height,
+                    height: _height + widget.bottomPadding,
                     child: PageView.builder(
                       itemCount: _totalDays,
                       controller: _pageController,
