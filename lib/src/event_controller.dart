@@ -166,6 +166,9 @@ class EventController<T> extends ChangeNotifier {
 
     final daysFromRange = <DateTime>[];
     for (final rangingEvent in _rangingEventList) {
+      if (isInDayRangeForRecursive(rangingEvent, date)) {
+        events.add(rangingEvent);
+      }
       //print("ranging event : $rangingEvent");
       for (var i = 0;
           i <= rangingEvent.endDate.difference(rangingEvent.date).inDays;
@@ -181,9 +184,6 @@ class EventController<T> extends ChangeNotifier {
           //  print("date day : ${date.day}");
 
           if (isToday(eventDay, date)) {
-            events.add(rangingEvent);
-          } else if (isInDayRangeForRecursive(rangingEvent, date)) {
-            //print("Is recursive event");
             events.add(rangingEvent);
           }
         }
@@ -239,16 +239,12 @@ class EventController<T> extends ChangeNotifier {
               date.weekday <= lastDate.weekday)) &&
           isAfter;
       if (weekDayEnd <= weekDayStart) {
-        print("Week day end : $weekDayEnd and start : $weekDayStart");
         for (var i = weekDayStart; i <= 7 + weekDayEnd; i++) {
           days.add(i % 7);
         }
-        print("Days are : $days");
         inWeek = (days.contains(date.weekday) ||
                 (days.contains(0) && date.weekday == 7)) &&
             isAfter;
-
-        print("Event ${eventData.title} in week : $inWeek");
       }
 
       if (inWeek) {
