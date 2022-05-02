@@ -89,6 +89,8 @@ class InternalWeekViewPage<T> extends StatelessWidget {
 
   final Color allDayTextColor;
 
+  final double bottomPadding;
+
   /// A single page for week view.
   const InternalWeekViewPage({
     Key? key,
@@ -107,6 +109,7 @@ class InternalWeekViewPage<T> extends StatelessWidget {
     required this.timeLineWidth,
     required this.timeLineOffset,
     required this.height,
+    required this.bottomPadding,
     required this.hourHeight,
     required this.eventArranger,
     required this.verticalLineOffset,
@@ -133,8 +136,8 @@ class InternalWeekViewPage<T> extends StatelessWidget {
       }
     }
     return Container(
-      height: height + weekTitleHeight,
-      width: width,
+     // height: height + weekTitleHeight,
+     // width: width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -163,6 +166,7 @@ class InternalWeekViewPage<T> extends StatelessWidget {
           Expanded(
             child: SingleChildScrollView(
               controller: scrollController,
+              padding: EdgeInsets.only(bottom: bottomPadding),
               child: Column(
                 children: [
                   if (isEventAllDay)
