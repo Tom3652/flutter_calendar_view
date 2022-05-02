@@ -105,7 +105,7 @@ class InternalDayViewPage<T> extends StatelessWidget {
     //print("all days event : ${eventsAllDay}");
     //print("----------------------------------");
     return Container(
-      height: height,
+      //height: height,
       width: width,
       child: CustomScrollView(
         physics: NeverScrollableScrollPhysics(),
