@@ -238,10 +238,13 @@ class EventController<T> extends ChangeNotifier {
       var inWeek = ((date.weekday >= firstDate.weekday &&
           date.weekday <= lastDate.weekday)) && isAfter;
       if (weekDayEnd <= weekDayStart) {
+        print("Week day end : $weekDayEnd and start : $weekDayStart");
         for (var i = weekDayStart; i < 7 - weekDayStart + weekDayEnd; i++) {
           days.add(i % 7);
         }
+        print("Days are : $days");
         inWeek = days.contains(date.weekday) && isAfter;
+        print("Event ${eventData.title} in week : $inWeek");
       }
 
       if (inWeek) {
