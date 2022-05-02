@@ -239,7 +239,7 @@ class EventController<T> extends ChangeNotifier {
           date.weekday <= lastDate.weekday)) && isAfter;
       if (weekDayEnd <= weekDayStart) {
         print("Week day end : $weekDayEnd and start : $weekDayStart");
-        for (var i = weekDayStart; i < 7 - weekDayStart + weekDayEnd; i++) {
+        for (var i = weekDayStart; i < 7 + weekDayEnd; i++) {
           days.add(i % 7);
         }
         print("Days are : $days");
