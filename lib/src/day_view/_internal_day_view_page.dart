@@ -218,7 +218,8 @@ class InternalDayViewPage<T> extends StatelessWidget {
               ),
             ],
           ),
-        )
+        ),
+        SliverPadding(padding: EdgeInsets.only(bottom: bottomPadding))
       ],
     );
   }
