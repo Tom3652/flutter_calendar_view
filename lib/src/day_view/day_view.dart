@@ -308,7 +308,7 @@ class DayViewState<T> extends State<DayView<T>> {
                   physics: BouncingScrollPhysics(),
                   controller: _scrollController,
                   child: SizedBox(
-                    height: _height,
+                    //height: _height,
                     child: PageView.builder(
                       itemCount: _totalDays,
                       controller: _pageController,
