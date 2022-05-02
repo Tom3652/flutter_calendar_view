@@ -308,12 +308,12 @@ class DayViewState<T> extends State<DayView<T>> {
             children: [
               _dayTitleBuilder(_currentDate),
               Expanded(
-                child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
+                child: /*SingleChildScrollView(
+                  physics: NeverScrollableScrollPhysics(),
                   controller: _scrollController,
                   child: SizedBox(
                     height: _height + widget.bottomPadding,
-                    child: PageView.builder(
+                    child:*/ PageView.builder(
                       itemCount: _totalDays,
                       controller: _pageController,
                       physics: BouncingScrollPhysics(),
@@ -332,6 +332,7 @@ class DayViewState<T> extends State<DayView<T>> {
                           hourIndicatorSettings: _hourIndicatorSettings,
                           date: date,
                           onTileTap: widget.onEventTap,
+                          bottomPadding: widget.bottomPadding,
                           allDayTextColor: widget.allDayTextColor,
                           onDateLongPress: widget.onDateLongPress,
                           showLiveLine: widget.showLiveTimeLineInAllDays ||
@@ -347,8 +348,8 @@ class DayViewState<T> extends State<DayView<T>> {
                         );
                       },
                     ),
-                  ),
-                ),
+                 // ),
+               // ),
               ),
             ],
           ),

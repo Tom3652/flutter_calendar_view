@@ -71,6 +71,8 @@ class InternalDayViewPage<T> extends StatelessWidget {
 
   final Color allDayTextColor;
 
+  final double bottomPadding;
+
   /// Defines a single day page.
   const InternalDayViewPage({
     Key? key,
@@ -93,6 +95,7 @@ class InternalDayViewPage<T> extends StatelessWidget {
     required this.onTileTap,
     required this.onDateLongPress,
     required this.allDayTextColor,
+    required this.bottomPadding,
   }) : super(key: key);
 
   @override
@@ -105,7 +108,7 @@ class InternalDayViewPage<T> extends StatelessWidget {
     //print("all days event : ${eventsAllDay}");
     //print("----------------------------------");
     return CustomScrollView(
-      physics: NeverScrollableScrollPhysics(),
+      physics: BouncingScrollPhysics(),
       slivers: [
         if (isEventAllDay)
           SliverToBoxAdapter(
