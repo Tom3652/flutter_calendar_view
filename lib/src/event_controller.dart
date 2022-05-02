@@ -244,8 +244,10 @@ class EventController<T> extends ChangeNotifier {
           days.add(i % 7);
         }
         print("Days are : $days");
-        inWeek = (days.contains(date.weekday) || (days.contains(0))) &&
-                isAfter;
+        inWeek = (days.contains(date.weekday) ||
+                (days.contains(0) && date.weekday == 7)) &&
+            isAfter;
+
         print("Event ${eventData.title} in week : $inWeek");
       }
 
