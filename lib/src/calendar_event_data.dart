@@ -90,7 +90,7 @@ class CalendarEventData<T> {
       everyYear: json["everyYear"] ?? false,
       //event: json["event"],
       allDay: json["allDay"] ?? false,
-      reminder: json["reminder"] ?? true,
+      reminder: json["reminder"] ?? 0,
       color: Color(json["color"]),
       description: json["description"],
     )..createdAt = json["createdAt"];
