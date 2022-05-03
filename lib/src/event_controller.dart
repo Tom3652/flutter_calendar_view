@@ -142,9 +142,10 @@ class EventController<T> extends ChangeNotifier {
     final events = <CalendarEventData<T>>[];
 
     for (var i = 0; i < _events.length; i++) {
-      events.addAll(_events[i]
-          .getAllEvents()
-          .where((ele) => ele.everyYear || ele.everyMonth || ele.everyWeek));
+      events.addAll(_events[i].getAllEvents().where((ele) =>
+          ele.everyYear ||
+          ele.everyMonth ||
+          (ele.everyWeek && ele.date.weekday == date.weekday)));
       if (_events[i].year == date.year) {
         final monthEvents = _events[i]._months;
 
