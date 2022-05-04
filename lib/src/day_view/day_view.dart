@@ -204,6 +204,8 @@ class DayViewState<T> extends State<DayView<T>> {
 
   late VoidCallback _reloadCallback;
 
+  final ValueNotifier<DateTime> _valueNotifier = ValueNotifier(DateTime.now());
+
   @override
   void initState() {
     super.initState();
@@ -234,8 +236,7 @@ class DayViewState<T> extends State<DayView<T>> {
     _timeLineOffset = widget.timeLineOffset;
     _scrollController =
         ScrollController(initialScrollOffset: widget.scrollOffset);
-    _pageController =
-        PageController(initialPage: _currentIndex);
+    _pageController = PageController(initialPage: _currentIndex);
     _eventArranger = widget.eventArranger ?? SideEventArranger<T>();
     _timeLineBuilder = widget.timeLineBuilder ?? _defaultTimeLineBuilder;
     _eventTileBuilder = widget.eventTileBuilder ?? _defaultEventTileBuilder;
@@ -416,21 +417,24 @@ class DayViewState<T> extends State<DayView<T>> {
   /// [widget.dayTitleBuilder] is null.
   ///
   Widget _defaultDayBuilder(DateTime date) {
-    return DayPageHeader(
-      date: _currentDate,
-      onNextDay: nextPage,
-      onPreviousDay: previousPage,
-      onTitleTapped: () async {
-        final selectedDate = await showDatePicker(
-          context: context,
-          initialDate: date,
-          firstDate: _minDate,
-          lastDate: _maxDate,
-        );
+    return ValueListenableBuilder(
+      builder: (ctx, value, child) => DayPageHeader(
+        date: _currentDate,
+        onNextDay: nextPage,
+        onPreviousDay: previousPage,
+        onTitleTapped: () async {
+          final selectedDate = await showDatePicker(
+            context: context,
+            initialDate: date,
+            firstDate: _minDate,
+            lastDate: _maxDate,
+          );
 
-        if (selectedDate == null) return;
-        jumpToDate(selectedDate);
-      },
+          if (selectedDate == null) return;
+          jumpToDate(selectedDate);
+        },
+      ),
+      valueListenable: _valueNotifier,
     );
   }
 
@@ -438,14 +442,13 @@ class DayViewState<T> extends State<DayView<T>> {
   ///
   void _onPageChange(int index) {
     if (mounted) {
-      setState(() {
-        _currentDate = DateTime(
-          _currentDate.year,
-          _currentDate.month,
-          _currentDate.day + (index - _currentIndex),
-        );
-        _currentIndex = index;
-      });
+      _currentDate = DateTime(
+        _currentDate.year,
+        _currentDate.month,
+        _currentDate.day + (index - _currentIndex),
+      );
+      _currentIndex = index;
+      _valueNotifier.value = _currentDate;
     }
     widget.onPageChange?.call(_currentDate, _currentIndex);
   }

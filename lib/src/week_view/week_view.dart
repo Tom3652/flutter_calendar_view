@@ -207,6 +207,8 @@ class WeekViewState<T> extends State<WeekView<T>> {
   late ScrollController _scrollController;
   late final List<WeekDays> _weekDays;
 
+  final ValueNotifier<DateTime> _valueNotifier = ValueNotifier(DateTime.now());
+
   @override
   void initState() {
     super.initState();
@@ -476,29 +478,30 @@ class WeekViewState<T> extends State<WeekView<T>> {
   /// Default view header builder. This builder will be used if
   /// [widget.dayTitleBuilder] is null.
   Widget _defaultWeekPageHeaderBuilder(DateTime startDate, DateTime endDate) {
-    return WeekPageHeader(
-      startDate: _currentStartDate,
-      endDate: _currentEndDate,
-      onNextDay: nextPage,
-      onPreviousDay: previousPage,
-      onTitleTapped: () async {
-        final selectedDate = await showDatePicker(
-          context: context,
-          initialDate: startDate,
-          firstDate: _minDate,
-          lastDate: _maxDate,
-        );
+    return ValueListenableBuilder(
+      builder: (ctx, value, child) => WeekPageHeader(
+        startDate: _currentStartDate,
+        endDate: _currentEndDate,
+        onNextDay: nextPage,
+        onPreviousDay: previousPage,
+        onTitleTapped: () async {
+          final selectedDate = await showDatePicker(
+            context: context,
+            initialDate: startDate,
+            firstDate: _minDate,
+            lastDate: _maxDate,
+          );
 
-        if (selectedDate == null) return;
-        jumpToWeek(selectedDate);
-      },
+          if (selectedDate == null) return;
+          jumpToWeek(selectedDate);
+        },
+      ), valueListenable: _valueNotifier,
     );
   }
 
   /// Called when user change page using any gesture or inbuilt functions.
   void _onPageChange(int index) {
     if (mounted) {
-      setState(() {
         _currentStartDate = DateTime(
           _currentStartDate.year,
           _currentStartDate.month,
@@ -506,7 +509,7 @@ class WeekViewState<T> extends State<WeekView<T>> {
         );
         _currentEndDate = _currentStartDate.add(Duration(days: 6));
         _currentIndex = index;
-      });
+        _valueNotifier.value = _currentStartDate;
     }
     widget.onPageChange?.call(_currentStartDate, _currentIndex);
   }
