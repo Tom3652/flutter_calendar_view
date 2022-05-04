@@ -166,6 +166,8 @@ class MonthViewState<T> extends State<MonthView<T>> {
 
   late VoidCallback _reloadCallback;
 
+  final ValueNotifier<DateTime> _valueNotifier = ValueNotifier(DateTime.now());
+
   @override
   void initState() {
     super.initState();
@@ -202,8 +204,7 @@ class MonthViewState<T> extends State<MonthView<T>> {
     _currentIndex = _minDate.getMonthDifference(_currentDate) - 1;
 
     // Initialize page controller to control page actions.
-    _pageController =
-        PageController(initialPage: _currentIndex);
+    _pageController = PageController(initialPage: _currentIndex);
 
     // Initialize cell builder. Assign default if widget.cellBuilder is null.
     _cellBuilder = widget.cellBuilder ?? _defaultCellBuilder;
@@ -256,9 +257,12 @@ class MonthViewState<T> extends State<MonthView<T>> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: _width,
-              child: _headerBuilder(_currentDate),
+            ValueListenableBuilder(
+              builder: (ctx, value, child) => Container(
+                width: _width,
+                child: _headerBuilder(_currentDate),
+              ),
+              valueListenable: _valueNotifier,
             ),
             Expanded(
               child: PageView.builder(
@@ -332,14 +336,13 @@ class MonthViewState<T> extends State<MonthView<T>> {
   /// Calls when user changes page using gesture or inbuilt methods.
   void _onPageChange(int value) {
     if (mounted) {
-      setState(() {
-        _currentDate = DateTime(
-          _currentDate.year,
-          _currentDate.month + (value - _currentIndex),
-          _currentDate.day,
-        );
-        _currentIndex = value;
-      });
+      _currentDate = DateTime(
+        _currentDate.year,
+        _currentDate.month + (value - _currentIndex),
+        _currentDate.day,
+      );
+      _currentIndex = value;
+      _valueNotifier.value = currentDate;
     }
     widget.onPageChange?.call(_currentDate, _currentIndex);
   }
