@@ -108,6 +108,8 @@ class MonthView<T> extends StatefulWidget {
   /// This method will be called when user long press on calendar.
   final DatePressCallback? onDateLongPress;
 
+  final double bottomPadding;
+
   /// Main [Widget] to display month view.
   const MonthView({
     Key? key,
@@ -129,6 +131,7 @@ class MonthView<T> extends StatefulWidget {
     this.onCellTap,
     this.onEventTap,
     this.onDateLongPress,
+    this.bottomPadding = 0,
   }) : super(key: key);
 
   @override
@@ -301,6 +304,7 @@ class MonthViewState<T> extends State<MonthView<T>> {
                               controller: _controller,
                               borderColor: widget.borderColor,
                               borderSize: widget.borderSize,
+                              bottomPadding: widget.bottomPadding,
                               cellBuilder: _cellBuilder,
                               cellRatio: widget.cellAspectRatio,
                               date: date,
@@ -473,6 +477,7 @@ class _MonthPageBuilder<T> extends StatelessWidget {
   final double height;
   final CellTapCallback<T>? onCellTap;
   final DatePressCallback? onDateLongPress;
+  final double bottomPadding;
 
   const _MonthPageBuilder({
     Key? key,
@@ -487,6 +492,7 @@ class _MonthPageBuilder<T> extends StatelessWidget {
     required this.height,
     required this.onCellTap,
     required this.onDateLongPress,
+    required this.bottomPadding,
   }) : super(key: key);
 
   @override
@@ -501,6 +507,7 @@ class _MonthPageBuilder<T> extends StatelessWidget {
           crossAxisCount: 7,
           childAspectRatio: cellRatio,
         ),
+        padding: EdgeInsets.only(bottom: bottomPadding),
         itemCount: 42,
         shrinkWrap: true,
         itemBuilder: (context, index) {
