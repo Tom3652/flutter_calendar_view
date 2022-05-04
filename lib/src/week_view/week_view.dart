@@ -259,7 +259,7 @@ class WeekViewState<T> extends State<WeekView<T>> {
     _scrollController =
         ScrollController(initialScrollOffset: widget.scrollOffset);
     _pageController =
-        PageController(initialPage: _currentIndex, viewportFraction: 0.99);
+        PageController(initialPage: _currentIndex);
     _eventArranger = widget.eventArranger ?? SideEventArranger<T>();
     _timeLineBuilder = widget.timeLineBuilder ?? _defaultTimeLineBuilder;
     _eventTileBuilder = widget.eventTileBuilder ?? _defaultEventTileBuilder;
@@ -342,6 +342,7 @@ class WeekViewState<T> extends State<WeekView<T>> {
                   child: PageView.builder(
                     itemCount: _totalWeeks,
                     controller: _pageController,
+                    allowImplicitScrolling: true,
                     onPageChanged: _onPageChange,
                     itemBuilder: (_, index) {
                       final dates = _minDate

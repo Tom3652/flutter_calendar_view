@@ -203,7 +203,7 @@ class MonthViewState<T> extends State<MonthView<T>> {
 
     // Initialize page controller to control page actions.
     _pageController =
-        PageController(initialPage: _currentIndex, viewportFraction: 0.99);
+        PageController(initialPage: _currentIndex);
 
     // Initialize cell builder. Assign default if widget.cellBuilder is null.
     _cellBuilder = widget.cellBuilder ?? _defaultCellBuilder;
@@ -264,6 +264,7 @@ class MonthViewState<T> extends State<MonthView<T>> {
               child: PageView.builder(
                 controller: _pageController,
                 onPageChanged: _onPageChange,
+                allowImplicitScrolling: true,
                 itemBuilder: (_, index) {
                   final date = DateTime(_minDate.year, _minDate.month + index);
                   return Column(

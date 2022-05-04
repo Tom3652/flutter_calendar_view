@@ -235,7 +235,7 @@ class DayViewState<T> extends State<DayView<T>> {
     _scrollController =
         ScrollController(initialScrollOffset: widget.scrollOffset);
     _pageController =
-        PageController(initialPage: _currentIndex, viewportFraction: 0.99);
+        PageController(initialPage: _currentIndex);
     _eventArranger = widget.eventArranger ?? SideEventArranger<T>();
     _timeLineBuilder = widget.timeLineBuilder ?? _defaultTimeLineBuilder;
     _eventTileBuilder = widget.eventTileBuilder ?? _defaultEventTileBuilder;
@@ -318,6 +318,7 @@ class DayViewState<T> extends State<DayView<T>> {
                     PageView.builder(
                   itemCount: _totalDays,
                   controller: _pageController,
+                  allowImplicitScrolling: true,
                   physics: BouncingScrollPhysics(),
                   onPageChanged: _onPageChange,
                   itemBuilder: (_, index) {
