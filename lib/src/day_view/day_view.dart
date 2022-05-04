@@ -308,7 +308,10 @@ class DayViewState<T> extends State<DayView<T>> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              _dayTitleBuilder(_currentDate),
+              ValueListenableBuilder(
+                builder: (ctx, value, child) => _dayTitleBuilder(_currentDate),
+                valueListenable: _valueNotifier,
+              ),
               Expanded(
                 child: /*SingleChildScrollView(
                   physics: NeverScrollableScrollPhysics(),
@@ -417,24 +420,21 @@ class DayViewState<T> extends State<DayView<T>> {
   /// [widget.dayTitleBuilder] is null.
   ///
   Widget _defaultDayBuilder(DateTime date) {
-    return ValueListenableBuilder(
-      builder: (ctx, value, child) => DayPageHeader(
-        date: _currentDate,
-        onNextDay: nextPage,
-        onPreviousDay: previousPage,
-        onTitleTapped: () async {
-          final selectedDate = await showDatePicker(
-            context: context,
-            initialDate: date,
-            firstDate: _minDate,
-            lastDate: _maxDate,
-          );
+    return DayPageHeader(
+      date: _currentDate,
+      onNextDay: nextPage,
+      onPreviousDay: previousPage,
+      onTitleTapped: () async {
+        final selectedDate = await showDatePicker(
+          context: context,
+          initialDate: date,
+          firstDate: _minDate,
+          lastDate: _maxDate,
+        );
 
-          if (selectedDate == null) return;
-          jumpToDate(selectedDate);
-        },
-      ),
-      valueListenable: _valueNotifier,
+        if (selectedDate == null) return;
+        jumpToDate(selectedDate);
+      },
     );
   }
 

@@ -260,8 +260,7 @@ class WeekViewState<T> extends State<WeekView<T>> {
     _timeLineOffset = widget.timeLineOffset;
     _scrollController =
         ScrollController(initialScrollOffset: widget.scrollOffset);
-    _pageController =
-        PageController(initialPage: _currentIndex);
+    _pageController = PageController(initialPage: _currentIndex);
     _eventArranger = widget.eventArranger ?? SideEventArranger<T>();
     _timeLineBuilder = widget.timeLineBuilder ?? _defaultTimeLineBuilder;
     _eventTileBuilder = widget.eventTileBuilder ?? _defaultEventTileBuilder;
@@ -336,7 +335,10 @@ class WeekViewState<T> extends State<WeekView<T>> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              _weekHeaderBuilder(_currentStartDate, _currentEndDate),
+              ValueListenableBuilder(
+                  builder: (ctx, value, child) =>
+                      _weekHeaderBuilder(_currentStartDate, _currentEndDate),
+                  valueListenable: _valueNotifier),
               Expanded(
                 child: SizedBox(
                   height: _height,
@@ -478,38 +480,36 @@ class WeekViewState<T> extends State<WeekView<T>> {
   /// Default view header builder. This builder will be used if
   /// [widget.dayTitleBuilder] is null.
   Widget _defaultWeekPageHeaderBuilder(DateTime startDate, DateTime endDate) {
-    return ValueListenableBuilder(
-      builder: (ctx, value, child) => WeekPageHeader(
-        startDate: _currentStartDate,
-        endDate: _currentEndDate,
-        onNextDay: nextPage,
-        onPreviousDay: previousPage,
-        onTitleTapped: () async {
-          final selectedDate = await showDatePicker(
-            context: context,
-            initialDate: startDate,
-            firstDate: _minDate,
-            lastDate: _maxDate,
-          );
+    return WeekPageHeader(
+      startDate: _currentStartDate,
+      endDate: _currentEndDate,
+      onNextDay: nextPage,
+      onPreviousDay: previousPage,
+      onTitleTapped: () async {
+        final selectedDate = await showDatePicker(
+          context: context,
+          initialDate: startDate,
+          firstDate: _minDate,
+          lastDate: _maxDate,
+        );
 
-          if (selectedDate == null) return;
-          jumpToWeek(selectedDate);
-        },
-      ), valueListenable: _valueNotifier,
+        if (selectedDate == null) return;
+        jumpToWeek(selectedDate);
+      },
     );
   }
 
   /// Called when user change page using any gesture or inbuilt functions.
   void _onPageChange(int index) {
     if (mounted) {
-        _currentStartDate = DateTime(
-          _currentStartDate.year,
-          _currentStartDate.month,
-          _currentStartDate.day + (index - _currentIndex) * 7,
-        );
-        _currentEndDate = _currentStartDate.add(Duration(days: 6));
-        _currentIndex = index;
-        _valueNotifier.value = _currentStartDate;
+      _currentStartDate = DateTime(
+        _currentStartDate.year,
+        _currentStartDate.month,
+        _currentStartDate.day + (index - _currentIndex) * 7,
+      );
+      _currentEndDate = _currentStartDate.add(Duration(days: 6));
+      _currentIndex = index;
+      _valueNotifier.value = _currentStartDate;
     }
     widget.onPageChange?.call(_currentStartDate, _currentIndex);
   }
