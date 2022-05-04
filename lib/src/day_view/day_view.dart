@@ -234,7 +234,8 @@ class DayViewState<T> extends State<DayView<T>> {
     _timeLineOffset = widget.timeLineOffset;
     _scrollController =
         ScrollController(initialScrollOffset: widget.scrollOffset);
-    _pageController = PageController(initialPage: _currentIndex);
+    _pageController =
+        PageController(initialPage: _currentIndex, viewportFraction: 0.99);
     _eventArranger = widget.eventArranger ?? SideEventArranger<T>();
     _timeLineBuilder = widget.timeLineBuilder ?? _defaultTimeLineBuilder;
     _eventTileBuilder = widget.eventTileBuilder ?? _defaultEventTileBuilder;
@@ -313,43 +314,45 @@ class DayViewState<T> extends State<DayView<T>> {
                   controller: _scrollController,
                   child: SizedBox(
                     height: _height + widget.bottomPadding,
-                    child:*/ PageView.builder(
-                      itemCount: _totalDays,
-                      controller: _pageController,
-                      physics: BouncingScrollPhysics(),
-                      onPageChanged: _onPageChange,
-                      itemBuilder: (_, index) {
-                        //print("total days : $_totalDays");
-                        final date = DateTime(_minDate.year, _minDate.month, _minDate.day + (index));
-                        //print("date day in page view : ${date.day} + index ----- ${index}");
-                        return InternalDayViewPage<T>(
-                          key: ValueKey(_hourHeight.toString() + date.toString()),
-                          width: _width,
-                          liveTimeIndicatorSettings: _liveTimeIndicatorSettings,
-                          timeLineBuilder: _timeLineBuilder,
-                          eventTileBuilder: _eventTileBuilder,
-                          heightPerMinute: widget.heightPerMinute,
-                          hourIndicatorSettings: _hourIndicatorSettings,
-                          date: date,
-                          onTileTap: widget.onEventTap,
-                          bottomPadding: widget.bottomPadding,
-                          allDayTextColor: widget.allDayTextColor,
-                          onDateLongPress: widget.onDateLongPress,
-                          showLiveLine: widget.showLiveTimeLineInAllDays ||
-                              date.compareWithoutTime(DateTime.now()),
-                          timeLineOffset: _timeLineOffset,
-                          timeLineWidth: _timeLineWidth,
-                          verticalLineOffset: widget.verticalLineOffset,
-                          showVerticalLine: widget.showVerticalLine,
-                          height: _height,
-                          controller: _controller,
-                          hourHeight: _hourHeight,
-                          eventArranger: _eventArranger,
-                        );
-                      },
-                    ),
-                 // ),
-               // ),
+                    child:*/
+                    PageView.builder(
+                  itemCount: _totalDays,
+                  controller: _pageController,
+                  physics: BouncingScrollPhysics(),
+                  onPageChanged: _onPageChange,
+                  itemBuilder: (_, index) {
+                    //print("total days : $_totalDays");
+                    final date = DateTime(
+                        _minDate.year, _minDate.month, _minDate.day + (index));
+                    //print("date day in page view : ${date.day} + index ----- ${index}");
+                    return InternalDayViewPage<T>(
+                      key: ValueKey(_hourHeight.toString() + date.toString()),
+                      width: _width,
+                      liveTimeIndicatorSettings: _liveTimeIndicatorSettings,
+                      timeLineBuilder: _timeLineBuilder,
+                      eventTileBuilder: _eventTileBuilder,
+                      heightPerMinute: widget.heightPerMinute,
+                      hourIndicatorSettings: _hourIndicatorSettings,
+                      date: date,
+                      onTileTap: widget.onEventTap,
+                      bottomPadding: widget.bottomPadding,
+                      allDayTextColor: widget.allDayTextColor,
+                      onDateLongPress: widget.onDateLongPress,
+                      showLiveLine: widget.showLiveTimeLineInAllDays ||
+                          date.compareWithoutTime(DateTime.now()),
+                      timeLineOffset: _timeLineOffset,
+                      timeLineWidth: _timeLineWidth,
+                      verticalLineOffset: widget.verticalLineOffset,
+                      showVerticalLine: widget.showVerticalLine,
+                      height: _height,
+                      controller: _controller,
+                      hourHeight: _hourHeight,
+                      eventArranger: _eventArranger,
+                    );
+                  },
+                ),
+                // ),
+                // ),
               ),
             ],
           ),
@@ -391,7 +394,7 @@ class DayViewState<T> extends State<DayView<T>> {
     int sum = endDuration.minute - startDuration.minute;
     bool smallDuration = startDuration.hour == endDuration.hour && (sum <= 30);
     //print("is a small duration $smallDuration");
-    if(smallDuration) {
+    if (smallDuration) {
       padding = 2;
     }
     if (events.isNotEmpty)

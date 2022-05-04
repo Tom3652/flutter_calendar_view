@@ -132,7 +132,6 @@ class WeekView<T> extends StatefulWidget {
 
   final double bottomPadding;
 
-
   /// Main widget for week view.
   const WeekView({
     Key? key,
@@ -215,7 +214,9 @@ class WeekViewState<T> extends State<WeekView<T>> {
     _weekDays = widget.weekDays.toSet().toList();
 
     if (!widget.showWeekends) {
-      _weekDays..remove(WeekDays.saturday)..remove(WeekDays.sunday);
+      _weekDays
+        ..remove(WeekDays.saturday)
+        ..remove(WeekDays.sunday);
     }
 
     assert(
@@ -257,7 +258,8 @@ class WeekViewState<T> extends State<WeekView<T>> {
     _timeLineOffset = widget.timeLineOffset;
     _scrollController =
         ScrollController(initialScrollOffset: widget.scrollOffset);
-    _pageController = PageController(initialPage: _currentIndex);
+    _pageController =
+        PageController(initialPage: _currentIndex, viewportFraction: 0.99);
     _eventArranger = widget.eventArranger ?? SideEventArranger<T>();
     _timeLineBuilder = widget.timeLineBuilder ?? _defaultTimeLineBuilder;
     _eventTileBuilder = widget.eventTileBuilder ?? _defaultEventTileBuilder;
@@ -448,9 +450,10 @@ class WeekViewState<T> extends State<WeekView<T>> {
     if (events.isNotEmpty) {
       double padding = 7;
       int sum = endDuration.minute - startDuration.minute;
-      bool smallDuration = startDuration.hour == endDuration.hour && (sum <= 30);
+      bool smallDuration =
+          startDuration.hour == endDuration.hour && (sum <= 30);
       //print("is a small duration $smallDuration");
-      if(smallDuration) {
+      if (smallDuration) {
         padding = 2;
       }
       return RoundedEventTile(
@@ -464,8 +467,7 @@ class WeekViewState<T> extends State<WeekView<T>> {
         padding: EdgeInsets.all(padding),
         backgroundColor: events[0].color,
       );
-    }
-    else {
+    } else {
       return Container();
     }
   }

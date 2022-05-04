@@ -202,7 +202,8 @@ class MonthViewState<T> extends State<MonthView<T>> {
     _currentIndex = _minDate.getMonthDifference(_currentDate) - 1;
 
     // Initialize page controller to control page actions.
-    _pageController = PageController(initialPage: _currentIndex);
+    _pageController =
+        PageController(initialPage: _currentIndex, viewportFraction: 0.99);
 
     // Initialize cell builder. Assign default if widget.cellBuilder is null.
     _cellBuilder = widget.cellBuilder ?? _defaultCellBuilder;
