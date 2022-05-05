@@ -161,7 +161,7 @@ class FilledCell<T> extends StatelessWidget {
                           alignment: Alignment.center,
                           child: AutoSizeText(
                             events[index].title,
-                            overflow: TextOverflow.fade,
+                            //overflow: TextOverflow.fade,
                             maxLines: 1,
                             maxFontSize: 12,
                             minFontSize: 8,
