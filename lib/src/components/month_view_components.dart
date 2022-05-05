@@ -164,7 +164,7 @@ class FilledCell<T> extends StatelessWidget {
                               Expanded(
                                 child: AutoSizeText(
                                   events[index].title,
-                                  overflow: TextOverflow.clip,
+                                  //overflow: TextOverflow.clip,
                                   maxLines: 1,
                                   maxFontSize: 12,
                                   minFontSize: 8,
