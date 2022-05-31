@@ -347,11 +347,9 @@ class MonthViewState<T> extends State<MonthView<T>> {
     log("Current date : ${currentDate.toIso8601String()}");
     log("Current page : $value");
     log("Current index : $_currentIndex");
+    //final positive = value - _currentIndex > 0;
     var month = currentDate.month + (value - _currentIndex);
-    var lastDayDateTime = (month < 12)
-        ? DateTime(currentDate.year, month + 1, 0)
-        : DateTime(currentDate.year + 1, 1, 0);
-    _currentDate = lastDayDateTime;
+    _currentDate = DateTime(currentDate.year, month + 1, 0);
     _currentIndex = value;
     _valueNotifier.value = currentDate;
     log("Current date after compute : ${currentDate.toIso8601String()}");
