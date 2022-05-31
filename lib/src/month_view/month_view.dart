@@ -2,8 +2,6 @@
 // Use of this source code is governed by a MIT-style license
 // that can be found in the LICENSE file.
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 import '../calendar_constants.dart';
@@ -224,8 +222,6 @@ class MonthViewState<T> extends State<MonthView<T>> {
     // This widget will be displayed on top of the page.
     // from where user can see month and change month.
     _headerBuilder = widget.headerBuilder ?? _defaultHeaderBuilder;
-
-    log("Current date init state : ${currentDate.toIso8601String()}");
   }
 
   @override
@@ -278,7 +274,6 @@ class MonthViewState<T> extends State<MonthView<T>> {
                 allowImplicitScrolling: true,
                 itemBuilder: (_, index) {
                   final date = DateTime(_minDate.year, _minDate.month + index);
-                  log("Date in page view : ${date.toIso8601String()}");
                   return Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -344,15 +339,10 @@ class MonthViewState<T> extends State<MonthView<T>> {
 
   /// Calls when user changes page using gesture or inbuilt methods.
   void _onPageChange(int value) {
-    log("Current date : ${currentDate.toIso8601String()}");
-    log("Current page : $value");
-    log("Current index : $_currentIndex");
-    //final positive = value - _currentIndex > 0;
-    var month = currentDate.month + (value - _currentIndex);
-    _currentDate = DateTime(currentDate.year, month + 1, 0);
+    _currentDate = DateTime(
+        currentDate.year, currentDate.month + (value - _currentIndex) + 1, 0);
     _currentIndex = value;
     _valueNotifier.value = currentDate;
-    log("Current date after compute : ${currentDate.toIso8601String()}");
     widget.onPageChange?.call(_currentDate, _currentIndex);
   }
 
