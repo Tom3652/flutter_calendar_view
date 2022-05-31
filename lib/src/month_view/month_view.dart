@@ -335,6 +335,9 @@ class MonthViewState<T> extends State<MonthView<T>> {
 
   /// Calls when user changes page using gesture or inbuilt methods.
   void _onPageChange(int value) {
+    print("Current date : ${currentDate.month}");
+    print("Current page : $value");
+    print("Current index : $_currentIndex");
     if (mounted) {
       _currentDate = DateTime(
         _currentDate.year,
