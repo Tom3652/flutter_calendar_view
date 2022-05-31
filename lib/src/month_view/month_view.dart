@@ -224,6 +224,8 @@ class MonthViewState<T> extends State<MonthView<T>> {
     // This widget will be displayed on top of the page.
     // from where user can see month and change month.
     _headerBuilder = widget.headerBuilder ?? _defaultHeaderBuilder;
+
+    log("Current date init state : ${currentDate.toIso8601String()}");
   }
 
   @override
@@ -276,6 +278,7 @@ class MonthViewState<T> extends State<MonthView<T>> {
                 allowImplicitScrolling: true,
                 itemBuilder: (_, index) {
                   final date = DateTime(_minDate.year, _minDate.month + index);
+                  log("Date in page view : ${date.toIso8601String()}");
                   return Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
