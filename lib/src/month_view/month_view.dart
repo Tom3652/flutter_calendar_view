@@ -2,6 +2,8 @@
 // Use of this source code is governed by a MIT-style license
 // that can be found in the LICENSE file.
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import '../calendar_constants.dart';
@@ -339,9 +341,9 @@ class MonthViewState<T> extends State<MonthView<T>> {
 
   /// Calls when user changes page using gesture or inbuilt methods.
   void _onPageChange(int value) {
-    print("Current date : ${currentDate.month}");
-    print("Current page : $value");
-    print("Current index : $_currentIndex");
+    log("Current date : ${currentDate.month}");
+    log("Current page : $value");
+    log("Current index : $_currentIndex");
     if (mounted) {
       _currentDate = DateTime(
         _currentDate.year,
