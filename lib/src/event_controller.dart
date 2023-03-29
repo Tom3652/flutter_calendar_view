@@ -191,14 +191,14 @@ class EventController<T> extends ChangeNotifier {
       }
     }
 
-    //print("events :$events");
+    print("events :$events");
     events.removeWhere((element) => !isEventInRange(element, date));
 
-    //print("events after :$events");
+    print("events after :$events");
 
     final uniqueEvents = <CalendarEventData<T>>{}..addAll(events);
 
-    //print("unique events : $uniqueEvents");
+    print("unique events : $uniqueEvents");
 
     return uniqueEvents.toList();
   }
