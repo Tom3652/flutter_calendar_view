@@ -163,7 +163,7 @@ class EventController<T> extends ChangeNotifier {
     }
 
     //print("ranging events : $_rangingEventList");
-    print("get event in controller for date : $date");
+    //print("get event in controller for date : $date");
 
     final daysFromRange = <DateTime>[];
     for (final rangingEvent in _rangingEventList) {
@@ -198,7 +198,7 @@ class EventController<T> extends ChangeNotifier {
 
     final uniqueEvents = <CalendarEventData<T>>{}..addAll(events);
 
-    print("unique events : $uniqueEvents");
+    //print("unique events : $uniqueEvents");
 
     return uniqueEvents.toList();
   }

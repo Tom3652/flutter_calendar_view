@@ -230,13 +230,13 @@ class DayViewState<T> extends State<DayView<T>> {
     }
     _currentDate = _initialDay;
     _totalDays = 3;// _maxDate.getDayDifference(_minDate) + 1;
-    print("min date : $_minDate");
-    print("min date : $_maxDate");
-    print("current date selected : $_currentDate");
-    print("difference in days : ${_currentDate.getDayDifference(_minDate)}");
+    //print("min date : $_minDate");
+    //print("min date : $_maxDate");
+    //print("current date selected : $_currentDate");
+    //print("difference in days : ${_currentDate.getDayDifference(_minDate)}");
 
     _currentIndex = 1;// _currentDate.getDayDifference(_minDate);// + 1;
-    print("current index page view : $_currentIndex");
+    //print("current index page view : $_currentIndex");
     _hourHeight = widget.heightPerMinute * 60;
     _height = _hourHeight * Constants.hoursADay;
     _timeLineOffset = widget.timeLineOffset;
@@ -331,10 +331,10 @@ class DayViewState<T> extends State<DayView<T>> {
                   physics: BouncingScrollPhysics(),
                   onPageChanged: _onPageChange,
                   itemBuilder: (_, index) {
-                    print("total days : $_totalDays");
+                    //print("total days : $_totalDays");
                     final date = DateTime(
                         _minDate.year, _minDate.month, _minDate.day + (index));
-                    print("date day in page view : ${date.day} + index ----- ${index}");
+                    //print("date day in page view : ${date.day} + index ----- ${index}");
                     return InternalDayViewPage<T>(
                       key: ValueKey(_hourHeight.toString() + date.toString()),
                       width: _width,
