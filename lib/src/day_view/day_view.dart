@@ -326,7 +326,6 @@ class DayViewState<T> extends State<DayView<T>> {
                     PageView.builder(
                   itemCount: _totalDays,
                   controller: _pageController,
-                  allowImplicitScrolling: true,
                   physics: BouncingScrollPhysics(),
                   onPageChanged: _onPageChange,
                   itemBuilder: (_, index) {
