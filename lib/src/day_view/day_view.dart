@@ -231,7 +231,7 @@ class DayViewState<T> extends State<DayView<T>> {
     _currentDate = _initialDay;
     _totalDays = _maxDate.getDayDifference(_minDate) + 1;
     print("current date selected : $_currentDate");
-    _currentIndex = _currentDate.getDayDifference(_minDate);
+    _currentIndex = _currentDate.getDayDifference(_minDate) + 1;
     print("current index page view : $_currentIndex");
     _hourHeight = widget.heightPerMinute * 60;
     _height = _hourHeight * Constants.hoursADay;
