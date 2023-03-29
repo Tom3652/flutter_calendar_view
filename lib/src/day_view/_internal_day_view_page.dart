@@ -101,7 +101,7 @@ class InternalDayViewPage<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final list = controller.getEventsOnDay(date);
-    print("list 1 : $list");
+    //print("list 1 : $list");
     final eventsAllDay = list.where((element) => element.allDay).toList();
     final isEventAllDay = eventsAllDay.isNotEmpty;
     print("is Event all day for DayView : $isEventAllDay");
