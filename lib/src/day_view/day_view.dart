@@ -229,7 +229,7 @@ class DayViewState<T> extends State<DayView<T>> {
       _initialDay = _maxDate;
     }
     _currentDate = _initialDay;
-    _totalDays = _maxDate.getDayDifference(_minDate);// + 1;
+    _totalDays = _maxDate.getDayDifference(_minDate) + 1;
     print("min date : $_minDate");
     print("current date selected : $_currentDate");
     print("difference in days : ${_currentDate.getDayDifference(_minDate)}");
