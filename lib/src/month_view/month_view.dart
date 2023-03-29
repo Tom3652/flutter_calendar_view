@@ -339,15 +339,10 @@ class MonthViewState<T> extends State<MonthView<T>> {
 
   /// Calls when user changes page using gesture or inbuilt methods.
   void _onPageChange(int value) {
-    if (mounted) {
-      _currentDate = DateTime(
-        _currentDate.year,
-        _currentDate.month + (value - _currentIndex),
-        _currentDate.day,
-      );
-      _currentIndex = value;
-      _valueNotifier.value = currentDate;
-    }
+    _currentDate = DateTime(
+        currentDate.year, currentDate.month + (value - _currentIndex) + 1, 0);
+    _currentIndex = value;
+    _valueNotifier.value = currentDate;
     widget.onPageChange?.call(_currentDate, _currentIndex);
   }
 
