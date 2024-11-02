@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 
 import '../calendar_event_data.dart';
 import '../constants.dart';
-import '../extensions.dart';
 import '../typedefs.dart';
 import 'common_components.dart';
 

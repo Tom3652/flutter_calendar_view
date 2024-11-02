@@ -6,11 +6,7 @@ import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 
 import '../components/_internal_components.dart';
-import '../event_arrangers/event_arrangers.dart';
-import '../event_controller.dart';
-import '../modals.dart';
 import '../painters.dart';
-import '../typedefs.dart';
 
 /// Defines a single day page.
 class InternalDayViewPage<T> extends StatelessWidget {
@@ -116,7 +112,7 @@ class InternalDayViewPage<T> extends StatelessWidget {
               margin: EdgeInsets.only(bottom: 10, top: 10, left: 10),
               child: Text(controller.getLocalizedDayForEvent(),
                   style: TextStyle(
-                    fontSize: Theme.of(context).textTheme.bodyText1!.fontSize,
+                    fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
                     color: allDayTextColor
                   )),
             ),
